@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Музыкальный магазин</title>
+    <link rel="stylesheet" href="/static/css/tables.css">
+</head>
+<body>
+<div id="container">
+    <div id="menu">
+        <ul>
+            <li><a href="/album">1 Альбомы</a></li>
+            <li><a href="/artist">2 Исполнители</a></li>
+            <li><a href="/genre">3 Жанры</a></li>
+            <li><a href="/medium">4 Носители</a></li>
+            <li><a href="/musicgroup">5 Музыкальные группы</a></li>
+            <li><a href="/song">6 Песни</a></li>
+            <li><a href="/enters">7 Исполнители/Музыкальные группы</a></li>
+            <li><a href="/containssong">8 Альбомы/Песни</a></li>
+            <li><a href="/containsmedium">9 Альбомы/Носители</a></li>
+            <li><a href="/containsartist">10 Альбомы/Исполнители</a></li>
+            <li><a href="/containsgroup">11 Альбомы/Музыкальные группы</a></li>
+            <li><a href="/performsartist">12 Песни/Исполнители</a></li>
+            <li><a href="/performsgroup">13 Песни/Музыкальные группы</a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <h1>Музыкальный магазин</h1>
+        <h2>Альбомы</h2>
+        <form th:action="@{/}" method="GET">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Название альбома</th>
+                        <th>Дата выпуска</th>
+                        <th>Продолжительность</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="albums : ${albums}">
+                        <td th:text="${albums.id}"></td>
+                        <td th:text="${albums.releaseDate}"></td>
+                        <td th:text="${albums.duration}"></td>
+                        <td>
+                            <!--<a th:href="${'#'} +  @{/album/edit/{id}(id=${album.id})}"><span>&#9999;</span></a>-->
+                            <form th:action="@{/albums/{id}/delete(id=${albums.id})}" method="POST">
+                                <button type="submit"><span>&#10060;</span></button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>
