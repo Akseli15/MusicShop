@@ -4,19 +4,23 @@ import com.example.zlatik.entity.ContainsMedium;
 import com.example.zlatik.service.ContainsMediumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/containsmedium")
 public class ContainsMediumController {
     @Autowired
     ContainsMediumService containsMediumService;
     @Async
     @GetMapping
-    public List<ContainsMedium> getAllContainsMediums() {
-        return containsMediumService.getAllContainsMediums();
+    public String getAllContainsMediums(Model model) {
+        model.addAttribute("containsmediums", containsMediumService.getAllContainsMediums());
+        return "containsmedium";
     }
     @Async
     @GetMapping("/{title}")
@@ -29,8 +33,24 @@ public class ContainsMediumController {
         return containsMediumService.createContainsMedium(containsMedium);
     }
     @Async
-    @DeleteMapping("/{title}")
-    public void deleteContainsMedium(@PathVariable("title") Integer title) {
-        containsMediumService.deleteContainsMedium(title);
+    @PostMapping("/delete/{id}")
+    public String deleteContainsMedium(@PathVariable("id") Integer id) {
+        containsMediumService.deleteContainsMedium(id);
+        return "redirect:/containsmedium";
+    }
+    @Async
+    @GetMapping("/edit/{id}")
+    public String editContainsGroup(@PathVariable("id") Integer id, Model model) {
+        ContainsMedium containsMedium = containsMediumService.getContainsMediumByTitle(id);
+        Map<String, Object> entityFields = createFieldsForContainsGroup(containsMedium);
+        model.addAttribute("entity", entityFields);
+        return "redirect:/";
+    }
+
+    private Map<String, Object> createFieldsForContainsGroup(ContainsMedium containsMedium) {
+        Map<String, Object> entityFields = new HashMap<>();
+        entityFields.put("Название альбома", containsMedium.getAlbum());
+        entityFields.put("ID накопителя", containsMedium.getMedium());
+        return entityFields;
     }
 }

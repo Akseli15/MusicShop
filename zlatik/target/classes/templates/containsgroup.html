@@ -8,19 +8,19 @@
     <div id="container">
         <div id="menu">
             <ul>
-                <li><a href="#table1">1 Альбомы</a></li>
-                <li><a href="#table2">2 Исполнители</a></li>
-                <li><a href="#table3">3 Жанры</a></li>
-                <li><a href="#table4">4 Носители</a></li>
-                <li><a href="#table5">5 Музыкальные группы</a></li>
-                <li><a href="#table6">6 Песни</a></li>
-                <li><a href="#table7">7 Исполнители/Музыкальные группы</a></li>
-                <li><a href="#table8">8 Альбомы/Песни</a></li>
-                <li><a href="#table9">9 Альбомы/Носители</a></li>
-                <li><a href="#table10">10 Альбомы/Исполнители</a></li>
-                <li><a href="#table11">11 Альбомы/Музыкальные группы</a></li>
-                <li><a href="#table12">12 Песни/Исполнители</a></li>
-                <li><a href="#table13">13 Песни/Музыкальные группы</a></li>
+                <li><a href="/">Альбомы</a></li>
+                <li><a href="/artist">Исполнители</a></li>
+                <li><a href="/genre">Жанры</a></li>
+                <li><a href="/medium">Носители</a></li>
+                <li><a href="/musicgroup">Музыкальные группы</a></li>
+                <li><a href="/song">Песни</a></li>
+                <li><a href="/enters">Исполнители/Музыкальные группы</a></li>
+                <li><a href="/containssong">Альбомы/Песни</a></li>
+                <li><a href="/containsmedium">Альбомы/Носители</a></li>
+                <li><a href="/containsartist">Альбомы/Исполнители</a></li>
+                <li><a href="/containsgroup">Альбомы/Музыкальные группы</a></li>
+                <li><a href="/performsartist">Песни/Исполнители</a></li>
+                <li><a href="/performsgroup">Песни/Музыкальные группы</a></li>
             </ul>
         </div>
         <div id="content">
@@ -28,16 +28,29 @@
             <h2>Альбомы/Музыкальные группы</h2>
             <form th:action="@{/}" method="GET">
                 <table>
+                    <thead>
                     <tr>
                         <th>ID</th>
                         <th>Название альбома</th>
                         <th>Название группы</th>
+                        <th>Действия</th>
                     </tr>
-                    <tr th:each="containsGroup : ${containsGroups}">
-                        <td th:text="${containsGroup.id}"></td>
-                        <td th:text="${containsGroup.album.name}"></td>
-                        <td th:text="${containsGroup.musicGroup.name}"></td>
+                    </thead>
+                    <tbody>
+                    <tr th:each="containsgroup : ${containsgroups}">
+                        <td th:text="${containsgroup.id}"></td>
+                        <td th:text="${containsgroup.album.id}"></td>
+                        <td th:text="${containsgroup.musicGroup.name}"></td>
+                        <td>
+                            <form th:action="@{/edit/{id}(id=${containsgroup.id})}" method="GET">
+                                <button type="submit"><span>&#9999;</span></button>
+                            </form>
+                            <form th:action="@{/delete/{id}(id=${containsgroup.id})}" method="POST">
+                                <button type="submit"><span>&#10060;</span></button>
+                            </form>
+                        </td>
                     </tr>
+                    </tbody>
                 </table>
             </form>
         </div>

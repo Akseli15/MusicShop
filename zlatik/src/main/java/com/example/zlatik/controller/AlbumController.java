@@ -4,14 +4,15 @@ import com.example.zlatik.entity.Album;
 import com.example.zlatik.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/")
 public class AlbumController {
 
@@ -19,33 +20,37 @@ public class AlbumController {
     AlbumService albumService;
 
     @Async
-    @GetMapping("")
-    public String test(Model model) {
+    @GetMapping("/")
+    public String getAllAlbums(Model model) {
         model.addAttribute("albums", albumService.getAllAlbums());
         return "album";
     }
+
     @Async
     @GetMapping("/{title}")
     public Album getAlbumByTitle(@PathVariable("title") String title) {
         return albumService.getAlbumByTitle(title);
     }
+
     @Async
     @PostMapping
     public Album createAlbum(@RequestBody Album album) {
-            return albumService.createAlbum(album);
-        }
+        return albumService.createAlbum(album);
+    }
     @Async
-    @DeleteMapping("/{title}")
-    public void deleteAlbum(@PathVariable("title") String title) {
-        albumService.deleteAlbum(title);
-        }
+    @PostMapping("/delete/{id}")
+    public String deleteAlbum(@PathVariable("id") String id) {
+        albumService.deleteAlbum(id);
+        return "redirect:/";
+    }
+
     @Async
-    @GetMapping("/album/edit")
+    @GetMapping("/edit/{id}")
     public String editAlbum(@PathVariable("id") String id, Model model) {
         Album album = albumService.getAlbumByTitle(id);
         Map<String, Object> entityFields = createFieldsForAlbum(album);
         model.addAttribute("entity", entityFields);
-        return "edit-entity";
+        return "redirect:/";
     }
 
     private Map<String, Object> createFieldsForAlbum(Album album) {

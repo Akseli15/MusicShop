@@ -4,19 +4,23 @@ import com.example.zlatik.entity.ContainsArtist;
 import com.example.zlatik.service.ContainsArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-@RestController
+@Controller
 @RequestMapping("/containsartist")
 public class ContainsArtistController {
     @Autowired
     ContainsArtistService containsArtistService;
     @Async
     @GetMapping
-    public List<ContainsArtist> getAllContainsArtists() {
-        return containsArtistService.getAllContainsArtists();
+    public String getAllContainsArtists(Model model) {
+        model.addAttribute("containsartists", containsArtistService.getAllContainsArtists());
+        return "containsartist";
     }
     @Async
     @GetMapping("/{title}")
@@ -25,12 +29,28 @@ public class ContainsArtistController {
     }
     @Async
     @PostMapping
-    public ContainsArtist createContainsArtist(@RequestBody ContainsArtist genre) {
-        return containsArtistService.createContainsArtist(genre);
+    public ContainsArtist createContainsArtist(@RequestBody ContainsArtist containsArtist) {
+        return containsArtistService.createContainsArtist(containsArtist);
     }
     @Async
-    @DeleteMapping("/{title}")
-    public void deleteContainsArtist(@PathVariable("title") Integer title) {
-        containsArtistService.deleteContainsArtist(title);
+    @PostMapping("/delete/{id}")
+    public String deleteContainsArtist(@PathVariable("id") Integer id) {
+        containsArtistService.deleteContainsArtist(id);
+        return "redirect:/containsartist";
+    }
+    @Async
+    @GetMapping("/edit/{id}")
+    public String editContainsArtist(@PathVariable("id") Integer id, Model model) {
+        ContainsArtist containsArtist = containsArtistService.getContainsArtistByTitle(id);
+        Map<String, Object> entityFields = createFieldsForArtist(containsArtist);
+        model.addAttribute("entity", entityFields);
+        return "redirect:/";
+    }
+
+    private Map<String, Object> createFieldsForArtist(ContainsArtist containsArtist) {
+        Map<String, Object> entityFields = new HashMap<>();
+        entityFields.put("Название альбома", containsArtist.getAlbum());
+        entityFields.put("ФИО", containsArtist.getArtist());
+        return entityFields;
     }
 }
