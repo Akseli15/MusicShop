@@ -39,7 +39,7 @@ public class GenreController {
     @PostMapping("/delete/{id}")
     public String deleteGenre(@PathVariable("id") String title) {
         genreService.deleteGenre(title);
-        return "redirect:/genres";
+        return "redirect:/genre";
     }
     @Async
     @GetMapping("/edit/{id}")
@@ -47,7 +47,7 @@ public class GenreController {
         Genre genre = genreService.getGenreByTitle(title);
         Map<String, Object> entityFields = createFieldsForContainsGroup(genre);
         model.addAttribute("entity", entityFields);
-        return "redirect:/";
+        return "redirect:/genre";
     }
 
     private Map<String, Object> createFieldsForContainsGroup(Genre genre) {

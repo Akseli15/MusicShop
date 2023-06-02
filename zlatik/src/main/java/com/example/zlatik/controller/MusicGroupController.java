@@ -1,24 +1,26 @@
 package com.example.zlatik.controller;
 
+import com.example.zlatik.entity.Medium;
 import com.example.zlatik.entity.MusicGroup;
 import com.example.zlatik.service.MusicGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-@RestController
+@Controller
 @RequestMapping("/musicgroup")
 public class MusicGroupController {
     @Autowired
     MusicGroupService musicGroupService;
     @Async
     @GetMapping
-    public List<MusicGroup> getAllMusicGroups() {
-        return musicGroupService.getAllMusicGroups();
+    public String getAllMusicGroups(Model model) {
+        model.addAttribute("musicgroups", musicGroupService.getAllMusicGroups());
+        return "musicgroup";
     }
     @Async
     @GetMapping("/{title}")
@@ -31,22 +33,23 @@ public class MusicGroupController {
         return musicGroupService.createMusicGroup(musicGroup);
     }
     @Async
-    @DeleteMapping("/{title}")
-    public void deleteMusicGroup(@PathVariable("title") String title) {
-        musicGroupService.deleteMusicGroup(title);
+    @PostMapping("/delete/{id}")
+    public String deleteMusicGroup(@PathVariable("id") String id) {
+        musicGroupService.deleteMusicGroup(id);
+        return "redirect:/musicgroup";
     }
     @Async
-    @GetMapping("/album/edit")
-    public String editAlbum(@PathVariable("id") String id, Model model) {
+    @GetMapping("/edit/{id}")
+    public String editMusicGroup(@PathVariable("id") String id, Model model) {
         MusicGroup musicGroup = musicGroupService.getMusicGroupByTitle(id);
-        Map<String, Object> entityFields = createFieldsForArtist(musicGroup);
+        Map<String, Object> entityFields = createFieldsForContainsGroup(musicGroup);
         model.addAttribute("entity", entityFields);
-        return "edit-entity";
+        return "redirect:/musicgroup";
     }
 
-    private Map<String, Object> createFieldsForArtist(MusicGroup musicGroup) {
+    private Map<String, Object> createFieldsForContainsGroup(MusicGroup musicGroup) {
         Map<String, Object> entityFields = new HashMap<>();
-        entityFields.put("Название", musicGroup.getName());
+        entityFields.put("Название альбома", musicGroup.getName());
         return entityFields;
     }
 }
