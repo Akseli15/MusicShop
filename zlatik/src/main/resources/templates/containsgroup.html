@@ -42,10 +42,10 @@
                         <td th:text="${containsgroup.album.id}"></td>
                         <td th:text="${containsgroup.musicGroup.name}"></td>
                         <td>
-                            <form th:action="@{/edit/{id}(id=${containsgroup.id})}" method="GET">
+                            <form th:action="@{/containsgroup/edit/{id}(id=${containsgroup.id})}" method="GET">
                                 <button type="submit"><span>&#9999;</span></button>
                             </form>
-                            <form th:action="@{/delete/{id}(id=${containsgroup.id})}" method="POST">
+                            <form th:action="@{/containsgroup/delete/{id}(id=${containsgroup.id})}" method="POST">
                                 <button type="submit"><span>&#10060;</span></button>
                             </form>
                         </td>

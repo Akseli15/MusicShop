@@ -44,10 +44,10 @@
                         <td th:text="${containssong.song.title}"></td>
                         <td th:text="${containssong.trackNumber}"></td>
                         <td>
-                            <form th:action="@{/edit/{id}(id=${containssong.getId})}" method="GET">
+                            <form th:action="@{/containssong/edit/{id}(id=${containssong.getId})}" method="GET">
                                 <button type="submit"><span>&#9999;</span></button>
                             </form>
-                            <form th:action="@{/delete/{id}(id=${containssong.getId()})}" method="POST">
+                            <form th:action="@{/containssong/delete/{id}(id=${containssong.getId()})}" method="POST">
                                 <button type="submit"><span>&#10060;</span></button>
                             </form>
                         </td>

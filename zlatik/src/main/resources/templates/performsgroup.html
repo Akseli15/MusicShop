@@ -32,7 +32,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Название песни</th>
-                        <th>Имя исполнителя</th>
+                        <th>Название группы</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
@@ -42,10 +42,10 @@
                         <td th:text="${performsgroup.song.title}"></td>
                         <td th:text="${performsgroup.musicGroup.name}"></td>
                         <td>
-                            <form th:action="@{/edit/{id}(id=${performsgroup.getId})}" method="GET">
+                            <form th:action="@{/performsgroup/edit/{id}(id=${performsgroup.getId})}" method="GET">
                                 <button type="submit"><span>&#9999;</span></button>
                             </form>
-                            <form th:action="@{/delete/{id}(id=${performsgroup.getId})}" method="POST">
+                            <form th:action="@{/performsgroup/delete/{id}(id=${performsgroup.getId})}" method="POST">
                                 <button type="submit"><span>&#10060;</span></button>
                             </form>
                         </td>

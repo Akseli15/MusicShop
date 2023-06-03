@@ -3,7 +3,7 @@
 
 <head>
     <title>Музыкальный магазин</title>
-    <link rel="stylesheet" href="../static/css/tables.css">
+    <link rel="stylesheet" href="../static/css/table.css">
 </head>
 
 <body>
@@ -40,9 +40,7 @@
                 <tr th:each="artist : ${artists}">
                     <td th:text="${artist.fullName}"></td>
                     <td>
-                        <form th:action="@{/artist/edit/{id}(id=${artist.fullName})}" method="GET">
-                            <button type="submit"><span>&#9999;</span></button>
-                        </form>
+                        <a th:href="@{/edit/{id}(id=${artist.fullName})}"><span>&#9999;</span></a>
                         <form th:action="@{/artist/delete/{id}(id=${artist.fullName})}" method="POST">
                             <button type="submit"><span>&#10060;</span></button>
                         </form>

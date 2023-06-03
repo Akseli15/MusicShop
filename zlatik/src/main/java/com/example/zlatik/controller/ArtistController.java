@@ -8,9 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Controller
 @RequestMapping("/artist")
 public class ArtistController {
@@ -25,9 +22,9 @@ public class ArtistController {
     }
 
     @Async
-    @GetMapping("/{title}")
-    public Artist getArtistByTitle(@PathVariable("title") String title) {
-        return artistService.getArtistByTitle(title);
+    @GetMapping("/{id}")
+    public Artist getArtistById(@PathVariable("id") String id) {
+        return artistService.getArtistById(id);
     }
 
     @Async
@@ -45,16 +42,26 @@ public class ArtistController {
 
     @Async
     @GetMapping("/edit/{id}")
-    public String editArtist(@PathVariable("id") String id, Model model) {
-        Artist artist = artistService.getArtistByTitle(id);
-        Map<String, Object> entityFields = createFieldsForArtist(artist);
-        model.addAttribute("entity", entityFields);
-        return "redirect:/";
+    public String getArtist(@PathVariable("id") String id, Model model) {
+        Artist artist = artistService.getArtistById(id);
+        if (artist != null) {
+            model.addAttribute("artist", artist);
+        }
+        return "editartist";
     }
 
-    private Map<String, Object> createFieldsForArtist(Artist artist) {
-        Map<String, Object> entityFields = new HashMap<>();
-        entityFields.put("ФИО", artist.getFullName());
-        return entityFields;
+    @Async
+    @PostMapping("/edit/{id}")
+    public String editArtist(@PathVariable("id") String id,
+                            @RequestParam(value = "newFullName", required = false) String newFullName) {
+        Artist artist = artistService.getArtistById(id);
+        if (artist == null) {
+            return "redirect:/edit/artist" + id + "?error=true";
+        }
+        if (newFullName != null) {
+            artist.setFullName(newFullName);
+        }
+        artistService.saveArtist(artist);
+        return "redirect:/artist";
     }
 }

@@ -17,7 +17,7 @@ public class ContainsArtistService {
         return containsArtistRepository.findAll();
     }
     @Async
-    public ContainsArtist getContainsArtistByTitle(Integer id) {
+    public ContainsArtist getContainsArtistById(Integer id) {
         return containsArtistRepository.findById(id).orElse(null);
     }
     @Async
@@ -28,5 +28,6 @@ public class ContainsArtistService {
     public void deleteContainsArtist(Integer id) {
         containsArtistRepository.deleteById(id);
     }
+
 }
 

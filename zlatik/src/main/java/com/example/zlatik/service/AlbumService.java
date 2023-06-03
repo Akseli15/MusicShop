@@ -17,15 +17,20 @@ public class AlbumService {
         return albumRepository.findAll();
     }
     @Async
-    public Album getAlbumByTitle(String title) {
-        return albumRepository.findById(title).orElse(null);
+    public Album getAlbumById(String id) {
+        return albumRepository.findById(id).orElse(null);
     }
     @Async
-    public Album createAlbum(Album album) {
-        return albumRepository.save(album);
+    public void createAlbum(Album album) {
+        albumRepository.save(album);
+        System.out.println("Create new empty object");
     }
     @Async
     public void deleteAlbum(String title) {
         albumRepository.deleteById(title);
+    }
+    @Async
+    public Album saveAlbum(Album album) {
+        return albumRepository.save(album);
     }
 }

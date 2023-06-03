@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"><html>
 <head>
     <title>Музыкальный магазин</title>
-    <link rel="stylesheet" href="../static/css/tables.css">
+    <link rel="stylesheet" href="../static/css/table.css">
 </head>
 <body>
     <div id="container">
@@ -42,10 +42,10 @@
                         <td th:text="${containsmedium.album.id}"></td>
                         <td th:text="${containsmedium.medium.id}"></td>
                         <td>
-                            <form th:action="@{/edit/{id}(id=${containsmedium.getId})}" method="GET">
+                            <form th:action="@{/containsmedium/edit/{id}(id=${containsmedium.getId})}" method="GET">
                                 <button type="submit"><span>&#9999;</span></button>
                             </form>
-                            <form th:action="@{/delete/{id}(id=${containsmedium.getId()})}" method="POST">
+                            <form th:action="@{/containsmedium/delete/{id}(id=${containsmedium.getId()})}" method="POST">
                                 <button type="submit"><span>&#10060;</span></button>
                             </form>
                         </td>

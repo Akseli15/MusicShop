@@ -1,5 +1,6 @@
 package com.example.zlatik.service;
 
+import com.example.zlatik.entity.Artist;
 import com.example.zlatik.entity.Genre;
 import com.example.zlatik.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,10 @@ public class GenreService {
     @Async
     public void deleteGenre(String title) {
         genreRepository.deleteById(title);
+    }
+    @Async
+    public Genre saveGenre(Genre genre) {
+        return genreRepository.save(genre);
     }
 }
 

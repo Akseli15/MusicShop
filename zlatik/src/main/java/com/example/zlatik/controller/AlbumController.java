@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Time;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/")
@@ -25,17 +25,18 @@ public class AlbumController {
         model.addAttribute("albums", albumService.getAllAlbums());
         return "album";
     }
-
     @Async
-    @GetMapping("/{title}")
-    public Album getAlbumByTitle(@PathVariable("title") String title) {
-        return albumService.getAlbumByTitle(title);
+    @GetMapping("/{id}")
+    public String getAlbumById(@PathVariable("id") String id, Model model) {
+        Album album = albumService.getAlbumById(id);
+        model.addAttribute("album", album);
+        return "album-details";
     }
-
     @Async
-    @PostMapping
-    public Album createAlbum(@RequestBody Album album) {
-        return albumService.createAlbum(album);
+    @PostMapping("/create")
+    public String createAlbum(@ModelAttribute Album album){
+        albumService.createAlbum(album);
+        return "redirect:/";
     }
     @Async
     @PostMapping("/delete/{id}")
@@ -43,21 +44,42 @@ public class AlbumController {
         albumService.deleteAlbum(id);
         return "redirect:/";
     }
-
     @Async
-    @GetMapping("/edit/{id}")
-    public String editAlbum(@PathVariable("id") String id, Model model) {
-        Album album = albumService.getAlbumByTitle(id);
-        Map<String, Object> entityFields = createFieldsForAlbum(album);
-        model.addAttribute("entity", entityFields);
+    @PostMapping("/save")
+    public String saveAlbum(@ModelAttribute("album") Album album) {
+        albumService.saveAlbum(album);
         return "redirect:/";
     }
+    @Async
+    @GetMapping("/edit/{id}")
+    public String getAlbum(@PathVariable("id") String id, Model model) {
+        Album album = albumService.getAlbumById(id);
+        if (album != null) {
+            model.addAttribute("album", album);
+        }
+        return "editalbum";
+    }
 
-    private Map<String, Object> createFieldsForAlbum(Album album) {
-        Map<String, Object> entityFields = new HashMap<>();
-        entityFields.put("ID", album.getId());
-        entityFields.put("Дата выпуска", album.getReleaseDate());
-        entityFields.put("Продолжительность", album.getDuration());
-        return entityFields;
+    @Async
+    @PostMapping("/edit/{id}")
+    public String editAlbum(@PathVariable("id") String id,
+                            @RequestParam(value = "newId", required = false) String newId,
+                            @RequestParam(value = "releaseDate", required = false) String releaseDate,
+                            @RequestParam(value = "duration", required = false) String duration) {
+        Album album = albumService.getAlbumById(id);
+        if (album == null) {
+            return "redirect:/edit/" + id + "?error=true";
+        }
+        if (newId != null) {
+            album.setId(newId);
+        }
+        if (releaseDate != null) {
+            album.setReleaseDate(LocalDate.parse(releaseDate));
+        }
+        if (duration != null) {
+            album.setDuration(Time.valueOf(duration));
+        }
+        albumService.saveAlbum(album);
+        return "redirect:/";
     }
 }

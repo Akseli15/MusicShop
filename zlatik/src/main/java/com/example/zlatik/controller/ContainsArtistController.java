@@ -23,9 +23,9 @@ public class ContainsArtistController {
         return "containsartist";
     }
     @Async
-    @GetMapping("/{title}")
-    public ContainsArtist getContainsArtistByTitle(@PathVariable("title") Integer title) {
-        return containsArtistService.getContainsArtistByTitle(title);
+    @GetMapping("/{id}")
+    public ContainsArtist getContainsArtistById(@PathVariable("id") Integer id) {
+        return containsArtistService.getContainsArtistById(id);
     }
     @Async
     @PostMapping
@@ -41,7 +41,7 @@ public class ContainsArtistController {
     @Async
     @GetMapping("/edit/{id}")
     public String editContainsArtist(@PathVariable("id") Integer id, Model model) {
-        ContainsArtist containsArtist = containsArtistService.getContainsArtistByTitle(id);
+        ContainsArtist containsArtist = containsArtistService.getContainsArtistById(id);
         Map<String, Object> entityFields = createFieldsForArtist(containsArtist);
         model.addAttribute("entity", entityFields);
         return "redirect:/";

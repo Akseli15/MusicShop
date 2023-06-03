@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Музыкальный магазин</title>
-    <link rel="stylesheet" href="/css/tables.css">
+    <link rel="stylesheet" href="/css/table.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
 <div id="container">
@@ -25,7 +27,10 @@
     </div>
     <div id="content">
         <h1>Музыкальный магазин</h1>
-        <h2>Альбомы</h2>
+        <div class="header">
+            <h2>Альбомы</h2>
+            <button class="add-button" onclick="openForm()">Добавить альбом</button>
+        </div>
         <form th:action="@{/}" method="GET" th:object="${albums}">
             <table>
                 <thead>
@@ -42,9 +47,7 @@
                     <td th:text="${album.getReleaseDate}"></td>
                     <td th:text="${album.getDuration}"></td>
                     <td>
-                        <form th:action="@{/edit/{id}(id=${album.getId})}" method="GET">
-                            <button type="submit"><span>&#9999;</span></button>
-                        </form>
+                        <a th:href="@{/edit/{id}(id=${album.getId})}"><span>&#9999;</span></a>
                         <form th:action="@{/delete/{id}(id=${album.getId()})}" method="POST">
                             <button type="submit"><span>&#10060;</span></button>
                         </form>
@@ -55,5 +58,59 @@
         </form>
     </div>
 </div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <h2>Добавить альбом</h2>
+        <form th:action="@{/create}" method="POST">
+            <table>
+                <tr>
+                    <td>Название альбома:</td>
+                    <td><input type="text" name="id"/></td>
+                </tr>
+                <tr>
+                    <td>Дата выпуска:</td>
+                    <td><input type="text" name="releaseDate" id="releaseDate"/></td>
+                </tr>
+                <tr>
+                    <td>Продолжительность:</td>
+                    <td><input type="text" name="duration" id="duration"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Сохранить</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openForm() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#releaseDate", {
+            dateFormat: "Y-m-d",
+            enableTime: false
+        });
+
+        flatpickr("#duration", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i:S",
+            time_24hr: true,
+            enableSeconds: true,
+            minuteIncrement: 1,
+            secondIncrement: 1
+        });
+    });
+</script>
 </body>
 </html>
