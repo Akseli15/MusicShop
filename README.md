@@ -1,16 +1,20 @@
 
 # MusicalShop 📝  
-Web-project developed with love.  
+Web-project developed with love. 
+
+## Screenshots  
+![App Screenshot](https://sun1-86.userapi.com/impg/qeIA_WKvB-wZtoik6pxF5i8NzQ4X2E6Xw7Lv_A/S-iTmEkWmss.jpg?size=1280x610&quality=96&sign=1800afb57b0418e8ebbcae535bb32e5c&type=album)
+
 
 ## Get Started 🚀  
 To get started, copy following command (Git shold be pre-installed)!  
-```git clone https://github.com/Createl15/IntroductoryPractice```
+```git clone https://github.com/Createl15/MusicShop```
 ...
 
 ## Tech Stack  
 **Front:** HTML, CSS 
 
-**Back:** Java 
+**Back:** Java framework Spring 
 
 
  
