@@ -1,48 +1,41 @@
 package com.example.zlatik.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Time;
-import java.time.LocalDate;
+import java.util.Date;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "Альбом")
+@Table(name = "album")
 public class Album {
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "BIGSERIAL", name = "id_album")
     @Id
-    @Column(name = "ID_название_альбома")
-    private String id;
-
-    @Column(name = "Дата_выпуска")
-    private LocalDate releaseDate;
-
-    @Column(name = "Продолжительность_альбома")
-    private Time duration;
+    private Long id;
+    @Column(columnDefinition = "TEXT", name = "album_name")
+    private String albumName;
+    @Column(columnDefinition = "DATE", name = "releasedate")
+    private Date releaseDate;
+    @Column(columnDefinition = "TIME", name = "album_duration")
+    private Time albumDuration;
 
     public Album() {
     }
-
-    public Album(String id, LocalDate releaseDate, Time duration) {
+    public Album(Long id, String albumName, Date releaseDate, Time albumDuration) {
         this.id = id;
+        this.albumName = albumName;
         this.releaseDate = releaseDate;
-        this.duration = duration;
+        this.albumDuration = albumDuration;
     }
 
-    public String getId() {
-        return id;
-    }
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-    public Time getDuration() {
-        return duration;
-    }
-    public void setId(String id) {
-        this.id = id;
-    }
-    public void setReleaseDate(LocalDate releaseDate) {
+    public Album(String albumName, Date releaseDate, Time albumDuration) {
+        this.albumName = albumName;
         this.releaseDate = releaseDate;
-    }
-    public void setDuration(Time duration) {
-        this.duration = duration;
+        this.albumDuration = albumDuration;
     }
 }

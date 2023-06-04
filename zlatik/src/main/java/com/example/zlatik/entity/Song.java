@@ -1,59 +1,43 @@
 package com.example.zlatik.entity;
 
 import jakarta.persistence.*;
-
+import lombok.Getter;
+import lombok.Setter;
 import java.sql.Time;
 
-
+@Getter
+@Setter
 @Entity
-@Table(name = "Песня")
+@Table(name = "song")
 public class Song {
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "BIGSERIAL", name = "id_song")
     @Id
-    @Column(name = "Название_песни")
-    private String title;
-
-    @Column(name = "Автор")
+    private Long id;
+    @Column(columnDefinition = "TEXT", name = "song_name")
+    private String songName;
+    @Column(columnDefinition = "TEXT", name = "author")
     private String author;
-
-    @Column(name = "Продолжительность_песни")
-    private Time duration;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_ID_жанра")
+    @Column(columnDefinition = "TIME", name = "song_duration")
+    private Time songDuration;
+    @ManyToOne
+    @JoinColumn(columnDefinition = "BIGSERIAL", name = "fk_id_genre", referencedColumnName = "id_genre", foreignKey = @ForeignKey(name = "fk_id_genre"))
     private Genre genre;
 
     public Song() {
     }
-
-    public Song(String title, String author, Time duration, Genre genre) {
-        this.title = title;
+    public Song(Long id, String songName, String author, Time songDuration, Genre genre) {
+        this.id = id;
+        this.songName = songName;
         this.author = author;
-        this.duration = duration;
+        this.songDuration = songDuration;
         this.genre = genre;
     }
-
-    public String getTitle() {
-        return title;
-    }
-    public String getAuthor() {
-        return author;
-    }
-    public Time getDuration() {
-        return duration;
-    }
-    public Genre getGenre() {
-        return genre;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public void setAuthor(String author) {
+    public Song(String songName, String author, Time songDuration, Genre genre) {
+        this.songName = songName;
         this.author = author;
-    }
-    public void setDuration(Time duration) {
-        this.duration = duration;
-    }
-    public void setGenre(Genre genre) {
+        this.songDuration = songDuration;
         this.genre = genre;
     }
 }

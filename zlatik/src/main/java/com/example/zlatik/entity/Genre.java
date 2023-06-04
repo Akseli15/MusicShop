@@ -1,27 +1,29 @@
 package com.example.zlatik.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
-@Table(name = "Жанр")
+@Table(name = "genre")
 public class Genre {
     @Id
-    @Column(name = "Название_жанра")
-    private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_genre")
+    private Long id;
+    @Column(name = "genre_name")
+    private String genreName;
 
     public Genre() {
     }
-    public Genre(String name) {
-        this.name = name;
+    public Genre(Long id, String genreName) {
+        this.id = id;
+        this.genreName = genreName;
     }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
+    public Genre(String genreName) {
+        this.genreName = genreName;
     }
 }
 

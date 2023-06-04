@@ -1,58 +1,39 @@
 package com.example.zlatik.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "Содержит_песня")
+@Table(name = "containssong")
 public class ContainsSong {
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_cодержит_песня")
-    private Integer id;
-
+    @Column(columnDefinition = "BIGSERIAL", name = "id_join")
+    @Id
+    private Long id;
     @ManyToOne
-    @JoinColumn(name = "fk_ID_альбома", referencedColumnName = "ID_название_альбома", foreignKey = @ForeignKey(name = "fk_ID_альбома"))
+    @JoinColumn(columnDefinition = "BIGSERIAL", name = "fk_id_album", referencedColumnName = "id_album", foreignKey = @ForeignKey(name = "fk_id_album"))
     private Album album;
-
     @ManyToOne
-    @JoinColumn(name = "fk_ID_песни", referencedColumnName = "Название_песни", foreignKey = @ForeignKey(name = "fk_ID_песни"))
+    @JoinColumn(columnDefinition = "BIGSERIAL", name = "fk_id_song", referencedColumnName = "id_song", foreignKey = @ForeignKey(name = "fk_id_song"))
     private Song song;
-
-    @Column(name = "Порядковый_номер")
-    private Integer trackNumber;
+    @Column(name = "indexnumber")
+    private Integer indexNumber;
 
     public ContainsSong() {
     }
-
-    public ContainsSong(Album album, Song song, Integer trackNumber) {
-        this.album = album;
-        this.song = song;
-        this.trackNumber = trackNumber;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-    public Album getAlbum() {
-        return album;
-    }
-    public Song getSong() {
-        return song;
-    }
-    public Integer getTrackNumber() {
-        return trackNumber;
-    }
-    public void setId(Integer id) {
+    public ContainsSong(Long id, Album album, Song song, Integer indexNumber) {
         this.id = id;
-    }
-    public void setAlbum(Album album) {
         this.album = album;
-    }
-    public void setSong(Song song) {
         this.song = song;
+        this.indexNumber = indexNumber;
     }
-    public void setTrackNumber(Integer trackNumber) {
-        this.trackNumber = trackNumber;
+    public ContainsSong(Album album, Song song, Integer indexNumber) {
+        this.album = album;
+        this.song = song;
+        this.indexNumber = indexNumber;
     }
 }
 

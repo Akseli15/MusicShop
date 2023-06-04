@@ -1,53 +1,33 @@
 package com.example.zlatik.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "Содержит_исполнитель")
+@Table(name = "containsartist")
 public class ContainsArtist {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "BIGSERIAL", name = "id_containsartist")
     @Id
-    @Column(name = "ID_содержит_исполнитель")
-    private Integer id;
-
+    private Long id;
     @ManyToOne
-    @JoinColumn(name = "fk_ID_альбома", referencedColumnName = "ID_название_альбома", foreignKey = @ForeignKey(name = "fk_ID_альбома"))
+    @JoinColumn(columnDefinition = "BIGSERIAL", name = "fk_id_album", referencedColumnName = "id_album", foreignKey = @ForeignKey(name = "fk_id_album"))
     private Album album;
-
     @ManyToOne
-    @JoinColumn(name = "fk_ID_исполнителя", referencedColumnName = "ФИО", foreignKey = @ForeignKey(name = "fk_ID_исполнителя"))
+    @JoinColumn(columnDefinition = "BIGSERIAL", name = "fk_id_artist", referencedColumnName = "id_artist", foreignKey = @ForeignKey(name = "fk_id_artist"))
     private Artist artist;
-
     public ContainsArtist() {
     }
-
-    public ContainsArtist(Integer id, Album album, Artist artist) {
+    public ContainsArtist(Long id, Album album, Artist artist) {
         this.id = id;
         this.album = album;
         this.artist = artist;
     }
-
-    public Integer getId() {
-        return id;
-    }
-    public Album getAlbum() {
-        return album;
-    }
-    public Artist getArtist() {
-        return artist;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    public void setAlbum(Album album) {
+    public ContainsArtist(Album album, Artist artist) {
         this.album = album;
-    }
-    public void setArtist(Artist artist) {
         this.artist = artist;
     }
 }

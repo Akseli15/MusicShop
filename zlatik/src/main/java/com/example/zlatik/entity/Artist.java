@@ -1,27 +1,31 @@
 package com.example.zlatik.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "Исполнитель")
+@Table(name = "artist")
 public class Artist {
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "BIGSERIAL", name = "id_artist")
     @Id
-    @Column(name = "ФИО")
-    private String fullName;
+    private Long id;
+    @Column(columnDefinition = "TEXT", name = "artist_name")
+    private String artistName;
 
     public Artist() {
     }
-    public Artist(String fullName) {
-        this.fullName = fullName;
+    public Artist(Long id, String artistName) {
+        this.id = id;
+        this.artistName = artistName;
     }
-    public String getFullName() {
-        return fullName;
-    }
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+
+    public Artist(String artistName) {
+        this.artistName = artistName;
     }
 }
 
