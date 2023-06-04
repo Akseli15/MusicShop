@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"><html>
 <head>
     <title>Музыкальный магазин</title>
-    <link rel="stylesheet" href="../static/css/table.css">
+    <link rel="stylesheet" href="../static/css/tables.css">
 </head>
 <body>
 <div id="container">
@@ -25,7 +25,10 @@
     </div>
     <div id="content">
         <h1>Музыкальный магазин</h1>
-        <h2>Носители</h2>
+        <div class="header">
+            <h2>Носители</h2>
+            <button class="add-button" onclick="openForm()">Добавить носитель</button>
+        </div>
         <form th:action="@{/}" method="GET">
             <table>
                 <thead>
@@ -55,5 +58,41 @@
         </form>
     </div>
 </div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <h2>Добавить носитель</h2>
+        <form th:action="@{/create}" method="POST">
+            <table>
+                <tr>
+                    <td>ID носителя:</td>
+                    <td><input type="text" name="id"/></td>
+                </tr>
+                <tr>
+                    <td>Тип носителя:</td>
+                    <td><input type="text" name="type"/></td>
+                </tr>
+                <tr>
+                    <td>Издатель:</td>
+                    <td><input type="text" name="publisher"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Сохранить</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+    function openForm() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myModal").style.display = "none";
+    }
+</script>
 </body>
 </html>

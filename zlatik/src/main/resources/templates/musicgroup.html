@@ -25,7 +25,10 @@
     </div>
     <div id="content">
         <h1>Музыкальный магазин</h1>
-        <h2>Музыкальные группы</h2>
+        <div class="header">
+            <h2>Музыкальные группы</h2>
+            <button class="add-button" onclick="openForm()">Добавить группу</button>
+        </div>
         <form th:action="@{/}" method="GET">
             <table>
                 <thead>
@@ -47,11 +50,37 @@
                         </td>
                     </tr>
                 </tbody>
-
-
             </table>
         </form>
     </div>
 </div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <h2>Добавить группу</h2>
+        <form th:action="@{/musicgroup/create}" method="POST">
+            <table>
+                <tr>
+                    <td>Имя исполнителя:</td>
+                    <td><input type="text" name="name"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Сохранить</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+    function openForm() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myModal").style.display = "none";
+    }
+</script>
 </body>
 </html>

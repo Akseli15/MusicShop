@@ -27,12 +27,15 @@
     </div>
     <div id="content">
         <h1>Музыкальный магазин</h1>
-        <h2>Исполнитель</h2>
+        <div class="header">
+            <h2>Исполнитель</h2>
+            <button class="add-button" onclick="openForm()">Добавить исполнителя</button>
+        </div>
         <form th:action="@{/artist}" method="GET">
             <table>
                 <thead>
                 <tr>
-                    <th>ФИО</th>
+                    <th>Имя исполнителя</th>
                     <th>Действия</th>
                 </tr>
                 </thead>
@@ -40,7 +43,7 @@
                 <tr th:each="artist : ${artists}">
                     <td th:text="${artist.fullName}"></td>
                     <td>
-                        <a th:href="@{/edit/{id}(id=${artist.fullName})}"><span>&#9999;</span></a>
+                        <a th:href="@{/artist/edit/{id}(id=${artist.fullName})}"><span>&#9999;</span></a>
                         <form th:action="@{/artist/delete/{id}(id=${artist.fullName})}" method="POST">
                             <button type="submit"><span>&#10060;</span></button>
                         </form>
@@ -51,6 +54,33 @@
         </form>
     </div>
 </div>
-</body>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <h2>Добавить исполнителя</h2>
+        <form th:action="@{/artist/create}" method="POST">
+            <table>
+                <tr>
+                    <td>Имя исполнителя:</td>
+                    <td><input type="text" name="fullName"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Сохранить</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+    function openForm() {
+        document.getElementById("myModal").style.display = "block";
+    }
 
+    function closeForm() {
+        document.getElementById("myModal").style.display = "none";
+    }
+</script>
+</body>
 </html>

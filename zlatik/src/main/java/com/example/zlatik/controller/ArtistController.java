@@ -56,7 +56,7 @@ public class ArtistController {
                             @RequestParam(value = "newFullName", required = false) String newFullName) {
         Artist artist = artistService.getArtistById(id);
         if (artist == null) {
-            return "redirect:/edit/artist" + id + "?error=true";
+            return "redirect:/artist/edit" + id + "?error=true";
         }
         if (newFullName != null) {
             artist.setFullName(newFullName);

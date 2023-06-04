@@ -33,7 +33,7 @@ public class AlbumController {
         return "album-details";
     }
     @Async
-    @PostMapping("/create")
+    @PostMapping("/createAlbum")
     public String createAlbum(@ModelAttribute Album album){
         albumService.createAlbum(album);
         return "redirect:/";
