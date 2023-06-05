@@ -9,77 +9,75 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/album")
 public class AlbumController {
 
     @Autowired
     AlbumService albumService;
-
     @Async
-    @GetMapping("/")
-    public String getAllAlbums(Model model) {
-        model.addAttribute("albums", albumService.getAllAlbums());
+    @GetMapping("/album")
+    public String getAll(Model model) {
+        model.addAttribute("albums", albumService.getAll());
         return "album";
     }
     @Async
     @GetMapping("/{id}")
-    public String getAlbumById(@PathVariable("id") String id, Model model) {
-        Album album = albumService.getAlbumById(id);
+    public String getById(@PathVariable("id") Long id, Model model) {
+        Album album = albumService.getById(id);
         model.addAttribute("album", album);
         return "album-details";
     }
     @Async
-    @PostMapping("/createAlbum")
-    public String createAlbum(@ModelAttribute Album album){
-        albumService.createAlbum(album);
-        return "redirect:/";
+    @PostMapping("/create")
+    public String create(@ModelAttribute Album album){
+        albumService.create(album);
+        return "redirect:/album";
     }
     @Async
     @PostMapping("/delete/{id}")
-    public String deleteAlbum(@PathVariable("id") String id) {
-        albumService.deleteAlbum(id);
-        return "redirect:/";
+    public String delete(@PathVariable("id") Long id) {
+        albumService.delete(id);
+        return "redirect:/album";
     }
     @Async
     @PostMapping("/save")
-    public String saveAlbum(@ModelAttribute("album") Album album) {
-        albumService.saveAlbum(album);
-        return "redirect:/";
+    public String save(@ModelAttribute("album") Album album) {
+        albumService.update(album);
+        return "redirect:/album";
     }
     @Async
     @GetMapping("/edit/{id}")
-    public String getAlbum(@PathVariable("id") String id, Model model) {
-        Album album = albumService.getAlbumById(id);
+    public String getAlbum(@PathVariable("id") Long id, Model model) {
+        Album album = albumService.getById(id);
         if (album != null) {
             model.addAttribute("album", album);
         }
         return "editalbum";
     }
-
     @Async
     @PostMapping("/edit/{id}")
-    public String editAlbum(@PathVariable("id") String id,
-                            @RequestParam(value = "newId", required = false) String newId,
+    public String editAlbum(@PathVariable("id") Long id,
+                            @RequestParam(value = "albumName", required = false) String albumName,
                             @RequestParam(value = "releaseDate", required = false) String releaseDate,
                             @RequestParam(value = "duration", required = false) String duration) {
-        Album album = albumService.getAlbumById(id);
+        Album album = albumService.getById(id);
         if (album == null) {
-            return "redirect:/edit/" + id + "?error=true";
+            return "redirect:/album/edit/" + id + "?error=true";
         }
-        if (newId != null) {
-            album.setId(newId);
+        if (albumName != null) {
+            album.setAlbumName(albumName);
         }
         if (releaseDate != null) {
-            album.setReleaseDate(LocalDate.parse(releaseDate));
+            album.setReleaseDate(Date.valueOf(releaseDate));
         }
         if (duration != null) {
-            album.setDuration(Time.valueOf(duration));
+            album.setAlbumDuration(Time.valueOf(duration));
         }
-        albumService.saveAlbum(album);
-        return "redirect:/";
+        albumService.update(album);
+        return "redirect:/album";
     }
 }
