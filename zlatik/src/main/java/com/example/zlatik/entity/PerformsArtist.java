@@ -13,7 +13,7 @@ public class PerformsArtist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(columnDefinition = "BIGSERIAL", name = "ID_исполняет")
     @Id
-    private Integer id;
+    private Long id;
     @ManyToOne
     @JoinColumn(columnDefinition = "BIGSERIAL", name = "fk_id_song", referencedColumnName = "id_song", foreignKey = @ForeignKey(name = "fk_id_song"))
     private Song song;
@@ -23,7 +23,7 @@ public class PerformsArtist {
 
     public PerformsArtist() {
     }
-    public PerformsArtist(Integer id, Song song, Artist artist) {
+    public PerformsArtist(Long id, Song song, Artist artist) {
         this.id = id;
         this.song = song;
         this.artist = artist;
