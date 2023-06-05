@@ -10,27 +10,31 @@ import java.util.List;
 
 @Service
 public class AlbumService {
+
     @Autowired
-    AlbumRepository albumRepository;
+    private AlbumRepository albumRepository;
     @Async
-    public List<Album> getAllAlbums() {
+    public List<Album> getAll() {
         return albumRepository.findAll();
     }
     @Async
-    public Album getAlbumById(String id) {
-        return albumRepository.findById(id).orElse(null);
+    public Album getById(Long id_album) {
+        return  albumRepository.findById(id_album).orElse(null);
     }
     @Async
-    public void createAlbum(Album album) {
+    public void create(Album album) {
         albumRepository.save(album);
-        System.out.println("Create new empty object");
     }
     @Async
-    public void deleteAlbum(String title) {
-        albumRepository.deleteById(title);
+    public void delete(Long id_album) {
+        albumRepository.deleteById(id_album);
     }
     @Async
-    public Album saveAlbum(Album album) {
-        return albumRepository.save(album);
+    public void update(Album album) {
+        Album album1 = getById(album.getId());
+        album1.setAlbumName(album.getAlbumName());
+        album1.setAlbumDuration(album.getAlbumDuration());
+        album1.setReleaseDate(album.getReleaseDate());
+        albumRepository.save(album1);
     }
 }

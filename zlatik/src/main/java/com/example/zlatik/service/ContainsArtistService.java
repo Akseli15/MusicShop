@@ -6,28 +6,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 @Service
 public class ContainsArtistService {
+
     @Autowired
-    ContainsArtistRepository containsArtistRepository;
+    private ContainsArtistRepository containsArtistRepository;
     @Async
-    public List<ContainsArtist> getAllContainsArtists() {
+    public List<ContainsArtist> getAll() {
         return containsArtistRepository.findAll();
     }
     @Async
-    public ContainsArtist getContainsArtistById(Integer id) {
-        return containsArtistRepository.findById(id).orElse(null);
+    public ContainsArtist getById(Long id_containsartist) {
+        return containsArtistRepository.findById(id_containsartist).orElse(null);
     }
     @Async
-    public ContainsArtist createContainsArtist(ContainsArtist containsArtist) {
-        return containsArtistRepository.save(containsArtist);
+    public void create(ContainsArtist containsArtist) {
+        containsArtistRepository.save(containsArtist);
     }
     @Async
-    public void deleteContainsArtist(Integer id) {
-        containsArtistRepository.deleteById(id);
+    public void delete(Long id_containsartist) {
+        containsArtistRepository.deleteById(id_containsartist);
     }
-
+    @Async
+    public void update(ContainsArtist containsArtist) {
+        ContainsArtist containsArtist1 = getById(containsArtist.getId());
+        containsArtist1.setAlbum(containsArtist.getAlbum());
+        containsArtist1.setArtist(containsArtist.getArtist());
+        containsArtistRepository.save(containsArtist1);
+    }
 }
 

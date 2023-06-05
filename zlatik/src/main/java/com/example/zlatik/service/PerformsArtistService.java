@@ -9,22 +9,30 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class PerformsArtistService {
+
     @Autowired
-    PerformsArtistRepository performsArtistRepository;
+    private PerformsArtistRepository performsArtistRepository;
     @Async
-    public List<PerformsArtist> getAllPerformsArtists() {
+    public List<PerformsArtist> getAll() {
         return performsArtistRepository.findAll();
     }
     @Async
-    public PerformsArtist getPerformsArtistByTitle(Integer id) {
-        return performsArtistRepository.findById(id).orElse(null);
+    public PerformsArtist getById(Long id_performsartist) {
+        return performsArtistRepository.findById(id_performsartist).orElse(null);
     }
     @Async
-    public PerformsArtist createPerformsArtist(PerformsArtist performsArtist) {
-        return performsArtistRepository.save(performsArtist);
+    public void create(PerformsArtist performsArtist) {
+        performsArtistRepository.save(performsArtist);
     }
     @Async
-    public void deletePerformsArtist(Integer id) {
-        performsArtistRepository.deleteById(id);
+    public void delete(Long id_performsartist) {
+        performsArtistRepository.deleteById(id_performsartist);
+    }
+    @Async
+    public void update(PerformsArtist performsArtist) {
+        PerformsArtist performsArtist1 = getById(performsArtist.getId());
+        performsArtist1.setArtist(performsArtist.getArtist());
+        performsArtist1.setSong(performsArtist.getSong());
+        performsArtistRepository.save(performsArtist1);
     }
 }

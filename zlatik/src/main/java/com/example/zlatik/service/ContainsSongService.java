@@ -10,22 +10,30 @@ import java.util.List;
 
 @Service
 public class ContainsSongService {
+
     @Autowired
-    ContainsSongRepository containsSongRepository;
+    private ContainsSongRepository containsSongRepository;
     @Async
-    public List<ContainsSong> getAllContainsSongs() {
+    public List<ContainsSong> getAll() {
         return containsSongRepository.findAll();
     }
     @Async
-    public ContainsSong getContainsSongByTitle(Integer id) {
-        return containsSongRepository.findById(id).orElse(null);
+    public ContainsSong getById(Long id_containssong) {
+        return containsSongRepository.findById(id_containssong).orElse(null);
     }
     @Async
-    public ContainsSong createContainsSong(ContainsSong containsSong) {
-        return containsSongRepository.save(containsSong);
+    public void create(ContainsSong containsSong) {
+        containsSongRepository.save(containsSong);
     }
     @Async
-    public void deleteContainsSong(Integer id) {
-        containsSongRepository.deleteById(id);
+    public void delete(Long id_containssong) {
+        containsSongRepository.deleteById(id_containssong);
+    }
+    @Async
+    public void update(ContainsSong containsSong) {
+        ContainsSong containsSong1 = getById(containsSong.getId());
+        containsSong1.setAlbum(containsSong.getAlbum());
+        containsSong1.setSong(containsSong.getSong());
+        containsSongRepository.save(containsSong1);
     }
 }
