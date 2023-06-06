@@ -1,7 +1,9 @@
 package com.example.zlatik.controller;
 
 import com.example.zlatik.entity.*;
+import com.example.zlatik.service.AlbumService;
 import com.example.zlatik.service.ContainsSongService;
+import com.example.zlatik.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
@@ -11,12 +13,19 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/containssong")
 public class ContainsSongController {
+
     @Autowired
     ContainsSongService containsSongService;
+    @Autowired
+    SongService songService;
+    @Autowired
+    AlbumService albumService;
     @Async
     @GetMapping("")
     public String getAll(Model model) {
         model.addAttribute("containssongs", containsSongService.getAll());
+        model.addAttribute("songs", songService.getAll());
+        model.addAttribute("albums", albumService.getAll());
         return "containssong";
     }
     @Async
@@ -49,6 +58,8 @@ public class ContainsSongController {
     public String getContainsSong(@PathVariable("id") Long id, Model model) {
         ContainsSong containsSong = containsSongService.getById(id);
         model.addAttribute("containsSong", containsSong);
+        model.addAttribute("songs", songService.getAll());
+        model.addAttribute("albums", albumService.getAll());
         return "editcontainssong";
     }
     @Async

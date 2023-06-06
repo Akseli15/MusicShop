@@ -1,6 +1,8 @@
 package com.example.zlatik.controller;
 
 import com.example.zlatik.entity.*;
+import com.example.zlatik.service.AlbumService;
+import com.example.zlatik.service.BandService;
 import com.example.zlatik.service.ContainsBandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -14,10 +16,16 @@ public class ContainsBandController {
 
     @Autowired
     ContainsBandService containsBandService;
+    @Autowired
+    BandService bandService;
+    @Autowired
+    AlbumService albumService;
     @Async
     @GetMapping("")
     public String getAll(Model model) {
         model.addAttribute("containsbands", containsBandService.getAll());
+        model.addAttribute("bands", bandService.getAll());
+        model.addAttribute("albums", albumService.getAll());
         return "containsband";
     }
     @Async
@@ -50,6 +58,8 @@ public class ContainsBandController {
     public String getContainsBand(@PathVariable("id") Long id, Model model) {
         ContainsBand containsBand = containsBandService.getById(id);
         model.addAttribute("containsBand", containsBand);
+        model.addAttribute("bands", bandService.getAll());
+        model.addAttribute("albums", albumService.getAll());
         return "editcontainsband";
     }
     @Async

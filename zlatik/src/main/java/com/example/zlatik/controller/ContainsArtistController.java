@@ -1,8 +1,8 @@
 package com.example.zlatik.controller;
 
-import com.example.zlatik.entity.Album;
-import com.example.zlatik.entity.Artist;
 import com.example.zlatik.entity.ContainsArtist;
+import com.example.zlatik.service.AlbumService;
+import com.example.zlatik.service.ArtistService;
 import com.example.zlatik.service.ContainsArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -16,10 +16,16 @@ public class ContainsArtistController {
 
     @Autowired
     ContainsArtistService containsArtistService;
+    @Autowired
+    ArtistService artistService;
+    @Autowired
+    AlbumService albumService;
     @Async
     @GetMapping("")
     public String getAll(Model model) {
         model.addAttribute("containsartists", containsArtistService.getAll());
+        model.addAttribute("artists", artistService.getAll());
+        model.addAttribute("albums", albumService.getAll());
         return "containsartist";
     }
     @Async
@@ -52,6 +58,8 @@ public class ContainsArtistController {
     public String getContainsArtist(@PathVariable("id") Long id, Model model) {
         ContainsArtist containsArtist = containsArtistService.getById(id);
         model.addAttribute("containsArtist", containsArtist);
+        model.addAttribute("artists", artistService.getAll());
+        model.addAttribute("albums", albumService.getAll());
         return "editcontainsartist";
     }
     @Async

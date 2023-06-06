@@ -1,7 +1,9 @@
 package com.example.zlatik.controller;
 
 import com.example.zlatik.entity.*;
+import com.example.zlatik.service.ArtistService;
 import com.example.zlatik.service.PerformsArtistService;
+import com.example.zlatik.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,16 @@ public class PerformsArtistController {
 
     @Autowired
     PerformsArtistService performsArtistService;
+    @Autowired
+    SongService songService;
+    @Autowired
+    ArtistService artistService;
     @Async
     @GetMapping("/performsartist")
     public String getAll(Model model) {
         model.addAttribute("performsartists", performsArtistService.getAll());
+        model.addAttribute("songs", songService.getAll());
+        model.addAttribute("artists", artistService.getAll());
         return "performsartist";
     }
     @Async
