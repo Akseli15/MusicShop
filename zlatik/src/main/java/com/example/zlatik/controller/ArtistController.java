@@ -1,6 +1,7 @@
 package com.example.zlatik.controller;
 
 import com.example.zlatik.entity.Artist;
+import com.example.zlatik.entity.Song;
 import com.example.zlatik.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -15,7 +16,7 @@ public class ArtistController {
     @Autowired
     ArtistService artistService;
     @Async
-    @GetMapping("/artist")
+    @GetMapping("")
     public String getAll(Model model) {
         model.addAttribute("artists", artistService.getAll());
         return "artist";
@@ -49,22 +50,12 @@ public class ArtistController {
     @GetMapping("/edit/{id}")
     public String getArtist(@PathVariable("id") Long id, Model model) {
         Artist artist = artistService.getById(id);
-        if (artist != null) {
-            model.addAttribute("artist", artist);
-        }
+        model.addAttribute("artist", artist);
         return "editartist";
     }
     @Async
     @PostMapping("/edit/{id}")
-    public String editArtist(@PathVariable("id") Long id,
-                            @RequestParam(value = "artistName", required = false) String artistName) {
-        Artist artist = artistService.getById(id);
-        if (artist == null) {
-            return "redirect:/artist/edit" + id + "?error=true";
-        }
-        if (artistName != null) {
-            artist.setArtistName(artistName);
-        }
+    public String editArtist(@ModelAttribute Artist artist) {
         artistService.update(artist);
         return "redirect:/artist";
     }

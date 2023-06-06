@@ -1,6 +1,10 @@
 package com.example.zlatik.controller;
 
+import com.example.zlatik.entity.Album;
+import com.example.zlatik.entity.Artist;
+import com.example.zlatik.entity.Genre;
 import com.example.zlatik.entity.Song;
+import com.example.zlatik.service.GenreService;
 import com.example.zlatik.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -8,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 @Controller
@@ -15,43 +20,51 @@ import java.util.Map;
 public class SongController {
     @Autowired
     SongService songService;
+    @Autowired
+    GenreService genreService;
     @Async
     @GetMapping
-    public String getAllSongs(Model model) {
-        model.addAttribute("songs", songService.getAllSongs());
+    public String getAll(Model model) {
+        model.addAttribute("songs", songService.getAll());
+        model.addAttribute("genres", genreService.getAll());
         return "song";
     }
     @Async
     @GetMapping("/{id}")
-    public Song getSongByTitle(@PathVariable("id") String id) {
-        return songService.getSongByTitle(id);
+    public String getById(@PathVariable("id") Long id, Model model) {
+        Song song = songService.getById(id);
+        model.addAttribute("song", song);
+        return "song-details";
     }
     @Async
-    @PostMapping
-    public Song createSongp(@RequestBody Song musicGroup) {
-        return songService.createSong(musicGroup);
+    @PostMapping("/create")
+    public String create(@ModelAttribute Song song){
+        songService.create(song);
+        return "redirect:/song";
     }
     @Async
     @PostMapping("/delete/{id}")
-    public String deleteSong(@PathVariable("id") String id) {
-        songService.deleteSong(id);
+    public String delete(@PathVariable("id") Long id) {
+        songService.delete(id);
         return "redirect:/song";
     }
     @Async
-    @GetMapping("/edit/{id}")
-    public String editSong(@PathVariable("id") String id, Model model) {
-        Song song = songService.getSongByTitle(id);
-        Map<String, Object> entityFields = createFieldsForContainsGroup(song);
-        model.addAttribute("entity", entityFields);
+    @PostMapping("/save")
+    public String save(@ModelAttribute("song") Song song) {
+        songService.update(song);
         return "redirect:/song";
     }
+    @GetMapping("/edit/{id}")
+    public String getSong(@PathVariable("id") Long id, Model model) {
+        Song song = songService.getById(id);
+        model.addAttribute("song", song);
+        model.addAttribute("genres", genreService.getAll());
+        return "editsong";
+    }
 
-    private Map<String, Object> createFieldsForContainsGroup(Song song) {
-        Map<String, Object> entityFields = new HashMap<>();
-        entityFields.put("Название песни", song.getTitle());
-        entityFields.put("Автор", song.getAuthor());
-        entityFields.put("Продолжительность", song.getDuration());
-        entityFields.put("Жанр", song.getGenre());
-        return entityFields;
+    @PostMapping("/edit")
+    public String editSong(@ModelAttribute Song song) {
+        songService.update(song);
+        return "redirect:/song";
     }
 }

@@ -17,7 +17,7 @@ public class ContainsArtistController {
     @Autowired
     ContainsArtistService containsArtistService;
     @Async
-    @GetMapping("/containsartist")
+    @GetMapping("")
     public String getAll(Model model) {
         model.addAttribute("containsartists", containsArtistService.getAll());
         return "containsartist";
@@ -51,26 +51,12 @@ public class ContainsArtistController {
     @GetMapping("/edit/{id}")
     public String getContainsArtist(@PathVariable("id") Long id, Model model) {
         ContainsArtist containsArtist = containsArtistService.getById(id);
-        if (containsArtist != null) {
-            model.addAttribute("containsArtist", containsArtist);
-        }
+        model.addAttribute("containsArtist", containsArtist);
         return "editcontainsartist";
     }
     @Async
     @PostMapping("/edit/{id}")
-    public String editContainsArtist(@PathVariable("id") Long id,
-                            @RequestParam(value = "artist", required = false) Artist artist,
-                            @RequestParam(value = "album", required = false) Album album) {
-        ContainsArtist containsArtist = containsArtistService.getById(id);
-        if (containsArtist == null) {
-            return "redirect:/containsartist/edit/" + id + "?error=true";
-        }
-        if (artist != null) {
-            containsArtist.setArtist(artist);
-        }
-        if (album != null) {
-            containsArtist.setAlbum(album);
-        }
+    public String editContainsArtist(@ModelAttribute ContainsArtist containsArtist) {
         containsArtistService.update(containsArtist);
         return "redirect:/containsartist";
     }

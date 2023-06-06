@@ -15,7 +15,7 @@ public class ContainsBandController {
     @Autowired
     ContainsBandService containsBandService;
     @Async
-    @GetMapping("/containsband")
+    @GetMapping("")
     public String getAll(Model model) {
         model.addAttribute("containsbands", containsBandService.getAll());
         return "containsband";
@@ -49,26 +49,12 @@ public class ContainsBandController {
     @GetMapping("/edit/{id}")
     public String getContainsBand(@PathVariable("id") Long id, Model model) {
         ContainsBand containsBand = containsBandService.getById(id);
-        if (containsBand != null) {
-            model.addAttribute("containsBand", containsBand);
-        }
+        model.addAttribute("containsBand", containsBand);
         return "editcontainsband";
     }
     @Async
     @PostMapping("/edit/{id}")
-    public String editContainsBand(@PathVariable("id") Long id,
-                                     @RequestParam(value = "band", required = false) Band band,
-                                     @RequestParam(value = "album", required = false) Album album) {
-        ContainsBand containsBand = containsBandService.getById(id);
-        if (containsBand == null) {
-            return "redirect:/containsband/edit/" + id + "?error=true";
-        }
-        if (band != null) {
-            containsBand.setBand(band);
-        }
-        if (album != null) {
-            containsBand.setAlbum(album);
-        }
+    public String editContainsBand(@ModelAttribute ContainsBand containsBand) {
         containsBandService.update(containsBand);
         return "redirect:/containsband";
     }

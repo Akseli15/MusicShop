@@ -1,6 +1,7 @@
 package com.example.zlatik.controller;
 
 import com.example.zlatik.entity.Carrier;
+import com.example.zlatik.entity.Song;
 import com.example.zlatik.service.CarrierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -15,7 +16,7 @@ public class CarrierController {
     @Autowired
     CarrierService carrierService;
     @Async
-    @GetMapping("/carrier")
+    @GetMapping("")
     public String getAll(Model model) {
         model.addAttribute("carriers", carrierService.getAll());
         return "carrier";
@@ -47,29 +48,15 @@ public class CarrierController {
     }
     @Async
     @GetMapping("/edit/{id}")
-    public String getMedium(@PathVariable("id") Long id, Model model) {
+    public String getCarrier(@PathVariable("id") Long id, Model model) {
         Carrier carrier = carrierService.getById(id);
-        if (carrier != null) {
-            model.addAttribute("carrier", carrier);
-        }
+        model.addAttribute("carrier", carrier);
         return "editcarrier";
     }
 
     @Async
     @PostMapping("/edit/{id}")
-    public String editMedium(@PathVariable("id") Long id,
-                             @RequestParam(value = "type", required = false) String type,
-                             @RequestParam(value = "publisher", required = false) String publisher) {
-        Carrier carrier = carrierService.getById(id);
-        if (carrier == null) {
-            return "redirect:/carrier/edit" + id + "?error=true";
-        }
-        if (type != null) {
-            carrier.setCarrierType(type);
-        }
-        if (publisher != null) {
-            carrier.setCarrierPublisher(publisher);
-        }
+    public String editCarrier(@ModelAttribute Carrier carrier) {
         carrierService.update(carrier);
         return "redirect:/carrier";
     }

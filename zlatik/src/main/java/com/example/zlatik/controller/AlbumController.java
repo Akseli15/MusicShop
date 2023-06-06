@@ -1,6 +1,7 @@
 package com.example.zlatik.controller;
 
 import com.example.zlatik.entity.Album;
+import com.example.zlatik.entity.Song;
 import com.example.zlatik.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -19,7 +20,7 @@ public class AlbumController {
     @Autowired
     AlbumService albumService;
     @Async
-    @GetMapping("/album")
+    @GetMapping("")
     public String getAll(Model model) {
         model.addAttribute("albums", albumService.getAll());
         return "album";
@@ -53,30 +54,12 @@ public class AlbumController {
     @GetMapping("/edit/{id}")
     public String getAlbum(@PathVariable("id") Long id, Model model) {
         Album album = albumService.getById(id);
-        if (album != null) {
-            model.addAttribute("album", album);
-        }
+        model.addAttribute("album", album);
         return "editalbum";
     }
     @Async
     @PostMapping("/edit/{id}")
-    public String editAlbum(@PathVariable("id") Long id,
-                            @RequestParam(value = "albumName", required = false) String albumName,
-                            @RequestParam(value = "releaseDate", required = false) String releaseDate,
-                            @RequestParam(value = "duration", required = false) String duration) {
-        Album album = albumService.getById(id);
-        if (album == null) {
-            return "redirect:/album/edit/" + id + "?error=true";
-        }
-        if (albumName != null) {
-            album.setAlbumName(albumName);
-        }
-        if (releaseDate != null) {
-            album.setReleaseDate(Date.valueOf(releaseDate));
-        }
-        if (duration != null) {
-            album.setAlbumDuration(Time.valueOf(duration));
-        }
+    public String editAlbum(@ModelAttribute Album album) {
         albumService.update(album);
         return "redirect:/album";
     }

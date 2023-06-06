@@ -1,6 +1,7 @@
 package com.example.zlatik.controller;
 
 import com.example.zlatik.entity.Band;
+import com.example.zlatik.entity.Song;
 import com.example.zlatik.service.BandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -14,7 +15,7 @@ public class BandController {
     @Autowired
     BandService bandService;
     @Async
-    @GetMapping("/band")
+    @GetMapping("")
     public String getAll(Model model) {
         model.addAttribute("bands", bandService.getAll());
         return "band";
@@ -48,23 +49,13 @@ public class BandController {
     @GetMapping("/edit/{id}")
     public String getBand(@PathVariable("id") Long id, Model model) {
         Band band = bandService.getById(id);
-        if (band != null) {
-            model.addAttribute("band", band);
-        }
+        model.addAttribute("band", band);
         return "editband";
     }
 
     @Async
     @PostMapping("/edit/{id}")
-    public String editBand(@PathVariable("id") Long id,
-                             @RequestParam(value = "bandName", required = false) String bandName) {
-        Band band = bandService.getById(id);
-        if (band == null) {
-            return "redirect:/band/edit" + id + "?error=true";
-        }
-        if (bandName != null) {
-            band.setBandName(bandName);
-        }
+    public String editBand(@ModelAttribute Band band) {
         bandService.update(band);
         return "redirect:/band";
     }
