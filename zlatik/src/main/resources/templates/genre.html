@@ -9,19 +9,19 @@
 <div id="container">
     <div id="menu">
         <ul>
-            <li><a href="/">Альбомы</a></li>
+            <li><a href="/album">Альбомы</a></li>
             <li><a href="/artist">Исполнители</a></li>
             <li><a href="/genre">Жанры</a></li>
-            <li><a href="/medium">Носители</a></li>
-            <li><a href="/musicgroup">Музыкальные группы</a></li>
+            <li><a href="/carrier">Носители</a></li>
+            <li><a href="/band">Музыкальные группы</a></li>
             <li><a href="/song">Песни</a></li>
-            <li><a href="/enters">Исполнители/Музыкальные группы</a></li>
+            <li><a href="/join">Исполнители/Музыкальные группы</a></li>
             <li><a href="/containssong">Альбомы/Песни</a></li>
-            <li><a href="/containsmedium">Альбомы/Носители</a></li>
+            <li><a href="/recorded">Альбомы/Носители</a></li>
             <li><a href="/containsartist">Альбомы/Исполнители</a></li>
-            <li><a href="/containsgroup">Альбомы/Музыкальные группы</a></li>
+            <li><a href="/containsband">Альбомы/Музыкальные группы</a></li>
             <li><a href="/performsartist">Песни/Исполнители</a></li>
-            <li><a href="/performsgroup">Песни/Музыкальные группы</a></li>
+            <li><a href="/performsband">Песни/Музыкальные группы</a></li>
         </ul>
     </div>
     <div id="content">
@@ -30,7 +30,7 @@
             <h2>Жанры</h2>
             <button class="add-button" onclick="openForm()">Добавить жанр</button>
         </div>
-        <form th:action="@{/}" method="GET">
+        <form th:action="@{/genre}" method="GET">
             <table>
                 <thead>
                 <tr>
@@ -39,13 +39,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="genres : ${genre}">
-                    <td th:text="${genres.name}"></td>
+                <tr th:each="genre : ${genres}">
+                    <td th:text="${genre.name}"></td>
                     <td>
-                        <form th:action="@{/genre/edit/{id}(id=${genres.getName})}" method="GET">
-                            <button type="submit"><span>&#9999;</span></button>
-                        </form>
-                        <form th:action="@{/genre/delete/{id}(id=${genres.getName})}" method="POST">
+                        <a th:href="@{/genre/edit/{id}(id=${genre.getName})}"><span>&#9999;</span></a>
+                        <form th:action="@{/genre/delete/{id}(id=${genre.getName})}" method="POST">
                             <button type="submit"><span>&#10060;</span></button>
                         </form>
                     </td>

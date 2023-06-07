@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.sql.Date;
-import java.sql.Time;
 
 @Controller
 @RequestMapping("/album")

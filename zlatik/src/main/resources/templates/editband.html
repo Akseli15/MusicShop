@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Музыкальный магазин - Редактирование музыкальной группы</title>
+  <link rel="stylesheet" href="/css/forms.css">
+</head>
+<body>
+<div id="content">
+  <h1>Музыкальный магазин</h1>
+  <h2>Редактирование музыкальной группы</h2>
+  <form th:action="@{/musicgroup/save}" th:object="${musicgroup}" th:method="post">
+    <table>
+      <tr>
+        <td>Название группы:</td>
+        <td><input type="text" th:field="*{name}" id="name" /></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button type="submit">Сохранить</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+</body>
+</html>

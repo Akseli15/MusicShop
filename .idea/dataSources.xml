@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="MusicalShopDB@localhost" uuid="5fdb59e4-96d6-4adc-b0f9-7e42bfe079d3">
+    <data-source source="LOCAL" name="MusicShop@localhost" uuid="f470671d-3d7e-4867-98c1-2c5a32eb1dba">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/MusicalShopDB</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/MusicShop</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

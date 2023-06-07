@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><html>
+<head>
+    <title>Музыкальный магазин</title>
+    <link rel="stylesheet" href="../static/css/tables.css">
+</head>
+<body>
+<div id="container">
+    <div id="menu">
+        <ul>
+            <li><a href="/album">Альбомы</a></li>
+            <li><a href="/artist">Исполнители</a></li>
+            <li><a href="/genre">Жанры</a></li>
+            <li><a href="/carrier">Носители</a></li>
+            <li><a href="/band">Музыкальные группы</a></li>
+            <li><a href="/song">Песни</a></li>
+            <li><a href="/join">Исполнители/Музыкальные группы</a></li>
+            <li><a href="/containssong">Альбомы/Песни</a></li>
+            <li><a href="/recorded">Альбомы/Носители</a></li>
+            <li><a href="/containsartist">Альбомы/Исполнители</a></li>
+            <li><a href="/containsband">Альбомы/Музыкальные группы</a></li>
+            <li><a href="/performsartist">Песни/Исполнители</a></li>
+            <li><a href="/performsband">Песни/Музыкальные группы</a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <h1>Музыкальный магазин</h1>
+        <h2>Песни/Музыкальные группы</h2>
+        <form th:action="@{/}" method="GET">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название песни</th>
+                        <th>Название группы</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="performsgroup : ${performsgroups}">
+                        <td th:text="${performsgroup.id}"></td>
+                        <td th:text="${performsgroup.song.title}"></td>
+                        <td th:text="${performsgroup.band.name}"></td>
+                        <td>
+                            <form th:action="@{/performsgroup/edit/{id}(id=${performsgroup.getId})}" method="GET">
+                                <button type="submit"><span>&#9999;</span></button>
+                            </form>
+                            <form th:action="@{/performsgroup/delete/{id}(id=${performsgroup.getId})}" method="POST">
+                                <button type="submit"><span>&#10060;</span></button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

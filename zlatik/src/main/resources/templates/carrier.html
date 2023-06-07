@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><html>
+<head>
+    <title>Музыкальный магазин</title>
+    <link rel="stylesheet" href="../static/css/tables.css">
+</head>
+<body>
+<div id="container">
+    <div id="menu">
+        <ul>
+            <li><a href="/album">Альбомы</a></li>
+            <li><a href="/artist">Исполнители</a></li>
+            <li><a href="/genre">Жанры</a></li>
+            <li><a href="/carrier">Носители</a></li>
+            <li><a href="/band">Музыкальные группы</a></li>
+            <li><a href="/song">Песни</a></li>
+            <li><a href="/join">Исполнители/Музыкальные группы</a></li>
+            <li><a href="/containssong">Альбомы/Песни</a></li>
+            <li><a href="/recorded">Альбомы/Носители</a></li>
+            <li><a href="/containsartist">Альбомы/Исполнители</a></li>
+            <li><a href="/containsband">Альбомы/Музыкальные группы</a></li>
+            <li><a href="/performsartist">Песни/Исполнители</a></li>
+            <li><a href="/performsband">Песни/Музыкальные группы</a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <h1>Музыкальный магазин</h1>
+        <div class="header">
+            <h2>Носители</h2>
+            <button class="add-button" onclick="openForm()">Добавить носитель</button>
+        </div>
+        <form th:action="@{/carrier}" method="GET">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID носителя</th>
+                        <th>Тип носителя</th>
+                        <th>Издатель</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="carrier : ${mediums}">
+                        <td th:text="${carrier.id}"></td>
+                        <td th:text="${carrier.type}"></td>
+                        <td th:text="${carrier.publisher}"></td>
+                        <td>
+                            <a th:href="@{/carrier/edit/{id}(id=${carrier.getId})}"><span>&#9999;</span></a>
+                            <form th:action="@{/carrier/delete/{id}(id=${carrier.getId})}" method="POST">
+                                <button type="submit"><span>&#10060;</span></button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <h2>Добавить носитель</h2>
+        <form th:action="@{/carrier/create}" method="POST">
+            <table>
+                <tr>
+                    <td>ID носителя:</td>
+                    <td><input type="text" name="id"/></td>
+                </tr>
+                <tr>
+                    <td>Тип носителя:</td>
+                    <td><input type="text" name="type"/></td>
+                </tr>
+                <tr>
+                    <td>Издатель:</td>
+                    <td><input type="text" name="publisher"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Сохранить</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+    function openForm() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myModal").style.display = "none";
+    }
+</script>
+</body>
+</html>

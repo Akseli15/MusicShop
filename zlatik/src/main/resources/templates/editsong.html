@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Музыкальный магазин - Редактирование песни</title>
+    <link rel="stylesheet" href="/css/forms.css">
+</head>
+<body>
+<div id="content">
+    <h1>Музыкальный магазин</h1>
+    <h2>Редактирование песни</h2>
+    <form th:action="@{/song/edit}" th:object="${song}" method="POST">
+        <table>
+            <tr>
+                <td>Название песни:</td>
+                <td><input type="text" required th:field="*{title}" id="title"/></td>
+            </tr>
+            <tr>
+                <td>Автор:</td>
+                <td><input type="text" required th:field="*{author}" id="author"/></td>
+            </tr>
+            <tr>
+                <td>Продолжительность песни:</td>
+                <td><input type="text" required th:field="*{duration}" id="duration"/></td>
+            </tr>
+            <tr>
+                <td>Жанр:</td>
+                <td>
+                    <select th:field="*{genre}">
+                        <option th:each="genre: ${genres}"
+                                th:value="${genre}"
+                                th:text="${genre.name}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Сохранить</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

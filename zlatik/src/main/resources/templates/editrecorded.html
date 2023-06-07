@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Музыкальный магазин - Редактирование носителя</title>
+  <link rel="stylesheet" href="/css/forms.css">
+</head>
+<body>
+<div id="content">
+  <h1>Музыкальный магазин</h1>
+  <h2>Редактирование носителя</h2>
+  <form th:action="@{/carrier/save}" th:object="${carrier}" method="POST">
+    <table>
+      <tr>
+        <td>ID носителя:</td>
+        <td><input type="text" th:field="*{id}" id="id" /></td>
+      </tr>
+      <tr>
+        <td>Тип носителя:</td>
+        <td><input type="text" th:field="*{type}" id="type" /></td>
+      </tr>
+      <tr>
+        <td>Издатель:</td>
+        <td><input type="text" th:field="*{publisher}" id="publisher" /></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button type="submit">Сохранить</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
+</body>
+</html>
