@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Музыкальный магазин</title>
+    <link rel="stylesheet" href="../static/css/tables.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+<div id="container">
+    <div id="menu">
+        <ul>
+            <li><a href="/album">Альбомы</a></li>
+            <li><a href="/artist">Исполнители</a></li>
+            <li><a href="/genre">Жанры</a></li>
+            <li><a href="/carrier">Носители</a></li>
+            <li><a href="/band">Музыкальные группы</a></li>
+            <li><a href="/song">Песни</a></li>
+            <li><a href="/joining">Исполнители/Музыкальные группы</a></li>
+            <li><a href="/containssong">Альбомы/Песни</a></li>
+            <li><a href="/recorded">Альбомы/Носители</a></li>
+            <li><a href="/containsartist">Альбомы/Исполнители</a></li>
+            <li><a href="/containsband">Альбомы/Музыкальные группы</a></li>
+            <li><a href="/performsartist">Песни/Исполнители</a></li>
+            <li><a href="/performsband">Песни/Музыкальные группы</a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <h1>Музыкальный магазин</h1>
+        <div class="header">
+            <h2>Исполнители/Музыкальные группы</h2>
+            <button class="add-button" onclick="openForm()">Добавить</button>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название группы</th>
+                <th>Имя исполнителя</th>
+                <th>Дата вступления</th>
+                <th>Дата ухода</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="joining : ${joinings}">
+                <td th:text="${joining.getId()}"></td>
+                <td th:text="${joining.band.getBandName()}"></td>
+                <td th:text="${joining.artist.getArtistName()}"></td>
+                <td th:text="${joining.getJoinDate()}"></td>
+                <td th:text="${joining.getLeaveDate()}"></td>
+                <td>
+                    <a th:href="@{/joining/edit/{id}(id=${joining.getId()})}"><span>&#9999;</span></a>
+                    <form th:action="@{/joining/delete/{id}(id=${joining.getId()})}" method="POST">
+                        <button type="submit"><span>&#10060;</span></button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <h2>Добавить альбом</h2>
+        <form th:action="@{/joining/create}" method="POST">
+            <table>
+                <tr>
+                    <td>Название группы:</td>
+                    <td>
+                        <select name="bandName" id="bandName">
+                            <option th:each="band : ${bands}"
+                                    th:value="${band.bandName}"
+                                    th:text="${band.bandName}"
+                                    th:selected="${joining != null && joining.band != null && band.bandName == joining.band.getBandName()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Имя исполнителя:</td>
+                    <td>
+                        <select name="artistName" id="artistName">
+                            <option th:each="artist : ${artists}"
+                                    th:value="${artist.artistName}"
+                                    th:text="${artist.artistName}"
+                                    th:selected="${joining != null && joining.artist != null && artist.artistName == joining.artist.getArtistName()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Дата вступления:</td>
+                    <td><input type="text" name="joinDate" id="joinDate"/></td>
+                </tr>
+                <tr>
+                    <td>Дата ухода:</td>
+                    <td><input type="text" name="leaveDate" id="leaveDate"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Сохранить</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+    function openForm() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#joinDate","#leaveDate", {
+            dateFormat: "Y-m-d",
+            enableTime: false
+        });
+    });
+</script>
+</body>
+</html>
