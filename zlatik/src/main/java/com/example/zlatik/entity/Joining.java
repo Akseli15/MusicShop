@@ -3,7 +3,8 @@ package com.example.zlatik.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import java.sql.Date;
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
@@ -20,21 +21,20 @@ public class Joining {
     @ManyToOne
     @JoinColumn(columnDefinition = "BIGSERIAL", name = "fk_id_artist", referencedColumnName = "id_artist", foreignKey = @ForeignKey(name = "fk_id_artist"))
     private Artist artist;
-    @JoinColumn(columnDefinition = "DATE",name = "joindate")
-    private Date joinDate;
-    @JoinColumn(columnDefinition = "DATE",name = "leavedate")
-    private Date leaveDate;
+    @JoinColumn(name = "join_date")
+    private LocalDate joinDate;
+    @JoinColumn(name = "leave_date")
+    private LocalDate leaveDate;
     public Joining() {
     }
-    public Joining(Long id, Band band, Artist artist, Date joinDate, Date leaveDate) {
+    public Joining(Long id, Band band, Artist artist, LocalDate joinDate, LocalDate leaveDate) {
         this.id = id;
         this.band = band;
         this.artist = artist;
         this.joinDate = joinDate;
         this.leaveDate = leaveDate;
     }
-
-    public Joining(Band band, Artist artist, Date joinDate, Date leaveDate) {
+    public Joining(Band band, Artist artist, LocalDate joinDate, LocalDate leaveDate) {
         this.band = band;
         this.artist = artist;
         this.joinDate = joinDate;

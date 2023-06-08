@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.sql.Time;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +25,12 @@ public class Song {
     @ManyToOne
     @JoinColumn(columnDefinition = "BIGSERIAL", name = "fk_id_genre", referencedColumnName = "id_genre", foreignKey = @ForeignKey(name = "fk_id_genre"))
     private Genre genre;
+    @OneToMany(mappedBy = "song", cascade = CascadeType.REMOVE)
+    private List<ContainsSong> containsSongs;
+    @OneToMany(mappedBy = "song", cascade = CascadeType.REMOVE)
+    private List<PerformsArtist> performsArtists;
+    @OneToMany(mappedBy = "song", cascade = CascadeType.REMOVE)
+    private List<PerformsBand> performsBands;
 
     public Song() {
     }

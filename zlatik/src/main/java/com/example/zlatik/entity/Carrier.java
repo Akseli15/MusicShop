@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -18,6 +20,8 @@ public class Carrier {
     private String carrierType;
     @Column(columnDefinition = "TEXT", name = "carrier_publisher")
     private String carrierPublisher;
+    @OneToMany(mappedBy = "carrier", cascade = CascadeType.REMOVE)
+    private List<Recorded> recordeds;
     public Carrier() {
     }
     public Carrier(Long id, String carrierType, String carrierPublisher) {
