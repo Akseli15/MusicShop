@@ -1,6 +1,5 @@
 package com.example.zlatik.repository;
 
-import com.example.zlatik.entity.Artist;
 import com.example.zlatik.entity.Band;
 import org.springframework.data.jpa.repository.JpaRepository;
 
