@@ -35,11 +35,8 @@ public class SongService {
         song1.setSongName(song.getSongName());
         song1.setAuthor(song.getAuthor());
         song1.setSongDuration(song.getSongDuration());
-
-        // Установка жанра по названию
         Genre genre = genreService.getByGenreName(song.getGenre().getGenreName());
         song1.setGenre(genre);
-
         songRepository.save(song1);
     }
 

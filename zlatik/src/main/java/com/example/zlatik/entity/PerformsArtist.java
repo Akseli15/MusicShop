@@ -11,7 +11,7 @@ import lombok.Setter;
 public class PerformsArtist {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "BIGSERIAL", name = "ID_исполняет")
+    @Column(columnDefinition = "BIGSERIAL", name = "id_performsartist")
     @Id
     private Long id;
     @ManyToOne

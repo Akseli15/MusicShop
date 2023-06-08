@@ -1,5 +1,8 @@
 package com.example.zlatik.service;
 
+import com.example.zlatik.entity.Artist;
+import com.example.zlatik.entity.Band;
+import com.example.zlatik.entity.Genre;
 import com.example.zlatik.entity.Joining;
 import com.example.zlatik.repository.JoiningRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,30 +14,35 @@ import java.util.List;
 public class JoiningService {
 
     @Autowired
-    private JoiningRepository joinRepository;
-
+    JoiningRepository joiningRepository;
+    @Autowired
+    ArtistService artistService;
+    @Autowired
+    BandService bandService;
     public List<Joining> getAll() {
-        return joinRepository.findAll();
+        return joiningRepository.findAll();
     }
 
     public Joining getById(Long id_join) {
-        return joinRepository.findById(id_join).orElse(null);
+        return joiningRepository.findById(id_join).orElse(null);
     }
 
-    public void create(Joining join) {
-        joinRepository.save(join);
+    public void create(Joining joining) {
+        joiningRepository.save(joining);
     }
 
     public void delete(Long id_join) {
-        joinRepository.deleteById(id_join);
+        joiningRepository.deleteById(id_join);
     }
 
-    public void update(Joining join) {
-        Joining join1 = getById(join.getId());
-        join1.setArtist(join.getArtist());
-        join1.setBand(join.getBand());
-        join1.setJoinDate(join.getJoinDate());
-        join1.setLeaveDate(join.getLeaveDate());
-        joinRepository.save(join1);
+    public void update(Joining joining) {
+        Joining joining1 = getById(joining.getId());
+        Artist artist = artistService.getByArtistName(joining.getArtist().getArtistName());
+        Band band = bandService.getByBandName(joining.getBand().getBandName());
+        joining1.setArtist(artist);
+        joining1.setBand(band);
+        joining1.setJoinDate(joining.getJoinDate());
+        joining1.setLeaveDate(joining.getLeaveDate());
+        joiningRepository.save(joining1);
     }
 }

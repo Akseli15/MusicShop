@@ -116,7 +116,11 @@
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-        flatpickr("#joinDate","#leaveDate", {
+        flatpickr("#joinDate", {
+            dateFormat: "Y-m-d",
+            enableTime: false
+        });
+        flatpickr("#leaveDate", {
             dateFormat: "Y-m-d",
             enableTime: false
         });

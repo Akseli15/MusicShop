@@ -10,7 +10,7 @@ import lombok.Setter;
 @Table(name = "containssong")
 public class ContainsSong {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "BIGSERIAL", name = "id_join")
+    @Column(columnDefinition = "BIGSERIAL", name = "id_containssong")
     @Id
     private Long id;
     @ManyToOne

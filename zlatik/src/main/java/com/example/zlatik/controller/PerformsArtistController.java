@@ -23,7 +23,7 @@ public class PerformsArtistController {
     @Autowired
     ArtistService artistService;
     @Async
-    @GetMapping("/performsartist")
+    @GetMapping("")
     public String getAll(Model model) {
         model.addAttribute("performsartists", performsArtistService.getAll());
         model.addAttribute("songs", songService.getAll());
@@ -60,6 +60,8 @@ public class PerformsArtistController {
     public String getPerformsArtist(@PathVariable("id") Long id, Model model) {
         PerformsArtist performsArtist = performsArtistService.getById(id);
         model.addAttribute("performsArtist", performsArtist);
+        model.addAttribute("songs", songService.getAll());
+        model.addAttribute("artists", artistService.getAll());
         return "editperformsartist";
     }
     @Async

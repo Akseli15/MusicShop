@@ -8,11 +8,14 @@
 <div id="content">
     <h1>Музыкальный магазин</h1>
     <h2>Редактирование исполнителя</h2>
-    <form th:action="@{/artist/save}" th:object="${artist}" method="POST">
+    <form th:action="@{/artist/edit/{id}(id=${artist.id})}" th:object="${artist}" method="POST">
         <table>
             <tr>
+                <input type="hidden" th:field="*{id}" />
+            </tr>
+            <tr>
                 <td>Имя исполнителя:</td>
-                <td><input type="text" th:field="*{fullName}" id="fullName" /></td>
+                <td><input type="text" th:field="*{artistName}" id="artistName" /></td>
             </tr>
             <tr>
                 <td colspan="2">

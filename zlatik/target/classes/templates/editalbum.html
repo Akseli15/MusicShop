@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             flatpickr("#releaseDate", {
                 dateFormat: "Y-m-d",
                 enableTime: false
@@ -28,19 +28,22 @@
 <div id="content">
     <h1>Музыкальный магазин</h1>
     <h2>Редактирование альбома</h2>
-    <form th:action="@{/save}" th:object="${album}" method="POST">
+    <form th:action="@{/album/edit/{id}(id=${album.id})}" th:object="${album}" method="POST">
         <table>
             <tr>
+                <input type="hidden" th:field="*{id}"/>
+            </tr>
+            <tr>
                 <td>Название альбома:</td>
-                <td><input type="text" th:field="*{id}" /></td>
+                <td><input type="text" th:field="*{albumName}" id="albumName"/></td>
             </tr>
             <tr>
                 <td>Дата выпуска:</td>
-                <td><input type="text" th:field="*{releaseDate}" id="releaseDate" /></td>
+                <td><input type="text" th:field="*{releaseDate}" id="releaseDate"/></td>
             </tr>
             <tr>
                 <td>Продолжительность:</td>
-                <td><input type="text" th:field="*{duration}" id="duration" /></td>
+                <td><input type="text" th:field="*{albumDuration}" id="duration"/></td>
             </tr>
             <tr>
                 <td colspan="2">

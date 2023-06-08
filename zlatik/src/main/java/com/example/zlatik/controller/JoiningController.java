@@ -1,71 +1,83 @@
 package com.example.zlatik.controller;
 
+import com.example.zlatik.entity.Artist;
+import com.example.zlatik.entity.Band;
 import com.example.zlatik.entity.Joining;
-import com.example.zlatik.service.AlbumService;
+import com.example.zlatik.service.ArtistService;
 import com.example.zlatik.service.BandService;
 import com.example.zlatik.service.JoiningService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/join")
+@RequestMapping("/joining")
 public class JoiningController {
-
     @Autowired
     JoiningService joinService;
     @Autowired
     BandService bandService;
     @Autowired
-    AlbumService albumService;
-    @Async
+    ArtistService artistService;
+
     @GetMapping("")
     public String getAll(Model model) {
-        model.addAttribute("joins", joinService.getAll());
-        model.addAttribute("albums", albumService.getAll());
+        model.addAttribute("joinings", joinService.getAll());
+        model.addAttribute("artists", artistService.getAll());
         model.addAttribute("bands", bandService.getAll());
-        return "join";
+        return "joining";
     }
-    @Async
+
     @GetMapping("/{id}")
-    public String getById(@PathVariable("title") Long id, Model model) {
-        Joining join = joinService.getById(id);
-        model.addAttribute("join", join);
-        return "join-details";
+    public String getById(@PathVariable("id") Long id, Model model) {
+        Joining joining = joinService.getById(id);
+        model.addAttribute("joining", joining);
+        return "joining-details";
     }
-    @Async
+
     @PostMapping("/create")
-    public String create(@RequestBody Joining join) {
-        joinService.create(join);
-        return "redirect:/join";
+    public String create(@RequestBody Joining joining,
+                         @RequestParam("artistName") String artistName,
+                         @RequestParam("bandName") String bandName) {
+        Artist artist = artistService.getByArtistName(artistName);
+        joining.setArtist(artist);
+        Band band = bandService.getByBandName(bandName);
+        joining.setBand(band);
+        joinService.create(joining);
+        return "redirect:/joining";
     }
-    @Async
+
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id) {
         joinService.delete(id);
-        return "redirect:/join";
+        return "redirect:/joining";
     }
-    @Async
+
     @PostMapping("/save")
-    public String save(@ModelAttribute("join") Joining join) {
-        joinService.update(join);
-        return "redirect:/join";
+    public String save(@ModelAttribute("joining") Joining joining) {
+        joinService.update(joining);
+        return "redirect:/joining";
     }
-    @Async
+
     @GetMapping("/edit/{id}")
     public String getJoin(@PathVariable("id") Long id, Model model) {
-        Joining join = joinService.getById(id);
-        model.addAttribute("join", join);
-        model.addAttribute("albums", albumService.getAll());
+        Joining joining = joinService.getById(id);
+        model.addAttribute("joining", joining);
+        model.addAttribute("artist", artistService.getAll());
         model.addAttribute("bands", bandService.getAll());
-        return "editjoin";
+        return "editjoining";
     }
-    @Async
+
     @PostMapping("/edit/{id}")
-    public String editJoin(@ModelAttribute Joining join) {
-        joinService.update(join);
-        return "redirect:/join";
+    public String editJoining(@ModelAttribute Joining joining,
+                              @RequestParam("artistName") String artistName,
+                              @RequestParam("bandName") String bandName) {
+        Artist artist = artistService.getByArtistName(artistName);
+        Band band = bandService.getByBandName(bandName);
+        joining.setArtist(artist);
+        joining.setBand(band);
+        joinService.update(joining);
+        return "redirect:/joining";
     }
 }

@@ -17,7 +17,7 @@
             <li><a href="/carrier">Носители</a></li>
             <li><a href="/band">Музыкальные группы</a></li>
             <li><a href="/song">Песни</a></li>
-            <li><a href="/join">Исполнители/Музыкальные группы</a></li>
+            <li><a href="/joining">Исполнители/Музыкальные группы</a></li>
             <li><a href="/containssong">Альбомы/Песни</a></li>
             <li><a href="/recorded">Альбомы/Носители</a></li>
             <li><a href="/containsartist">Альбомы/Исполнители</a></li>
@@ -32,33 +32,33 @@
             <h2>Песни</h2>
             <button class="add-button" onclick="openForm()">Добавить песню</button>
         </div>
-        <form th:action="@{/song}" method="GET">
-            <table>
-                <thead>
-                <tr>
-                    <th>Название песни</th>
-                    <th>Автор</th>
-                    <th>Продолжительность песни</th>
-                    <th>Жанр</th>
-                    <th>Действия</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="song : ${songs}">
-                    <td th:text="${song.title}"></td>
-                    <td th:text="${song.author}"></td>
-                    <td th:text="${song.duration}"></td>
-                    <td th:text="${song.genre.name}"></td>
-                    <td>
-                        <a th:href="@{/song/edit/{id}(id=${song.getTitle})}"><span>&#9999;</span></a>
-                        <form th:action="@{/song/delete/{id}(id=${song.getTitle})}" method="POST">
-                            <button type="submit"><span>&#10060;</span></button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название песни</th>
+                <th>Автор</th>
+                <th>Продолжительность песни</th>
+                <th>Жанр</th>
+                <th>Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="song : ${songs}">
+                <td th:text="${song.getId()}"></td>
+                <td th:text="${song.getSongName()}"></td>
+                <td th:text="${song.getAuthor()}"></td>
+                <td th:text="${song.getSongDuration()}"></td>
+                <td th:text="${song.genre.getGenreName()}"></td>
+                <td>
+                    <a th:href="@{/song/edit/{id}(id=${song.getId()})}"><span>&#9999;</span></a>
+                    <form th:action="@{/song/delete/{id}(id=${song.getId()})}" method="POST">
+                        <button type="submit"><span>&#10060;</span></button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 <div id="myModal" class="modal">
@@ -69,7 +69,7 @@
             <table>
                 <tr>
                     <td>Название песни:</td>
-                    <td><input type="text" name="title"/></td>
+                    <td><input type="text" name="songName"/></td>
                 </tr>
                 <tr>
                     <td>Автор:</td>
@@ -77,16 +77,16 @@
                 </tr>
                 <tr>
                     <td>Продолжительность песни:</td>
-                    <td><input type="text" name="duration" id="duration"/></td>
+                    <td><input type="text" name="songDuration" id="songDuration"/></td>
                 </tr>
                 <tr>
                     <td>Жанр:</td>
                     <td>
-                        <select>
+                        <select name="genreName" id="genreName">
                             <option th:each="genre : ${genres}"
-                                    th:value="${genre.name}"
-                                    th:text="${genre.name}"
-                                    th:selected="${genre.name == song.genre.name}"></option>
+                                    th:value="${genre.genreName}"
+                                    th:text="${genre.genreName}"
+                                    th:selected="${song != null && song.genre != null && genre.genreName == song.genre.getGenreName()}"></option>
                         </select>
                     </td>
 
@@ -111,7 +111,7 @@
 
     document.addEventListener('DOMContentLoaded', function () {
 
-        flatpickr("#duration", {
+        flatpickr("#songDuration", {
             enableTime: true,
             noCalendar: true,
             dateFormat: "H:i:S",

@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class Joining {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "BIGSERIAL", name = "id_join")
+    @Column(columnDefinition = "BIGSERIAL", name = "id_joining")
     @Id
     private Long id;
     @ManyToOne
@@ -39,6 +39,19 @@ public class Joining {
         this.artist = artist;
         this.joinDate = joinDate;
         this.leaveDate = leaveDate;
+    }
+    public String getArtistName() {
+        if (artist != null) {
+            return artist.getArtistName();
+        }
+        return null;
+    }
+
+    public String getBandName() {
+        if (band != null) {
+            return band.getBandName();
+        }
+        return null;
     }
 }
 
