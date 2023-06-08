@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping("/joining")
 public class JoiningController {
@@ -37,7 +39,7 @@ public class JoiningController {
     }
 
     @PostMapping("/create")
-    public String create(@RequestBody Joining joining,
+    public String create(@ModelAttribute Joining joining,
                          @RequestParam("artistName") String artistName,
                          @RequestParam("bandName") String bandName) {
         Artist artist = artistService.getByArtistName(artistName);
@@ -64,7 +66,7 @@ public class JoiningController {
     public String getJoin(@PathVariable("id") Long id, Model model) {
         Joining joining = joinService.getById(id);
         model.addAttribute("joining", joining);
-        model.addAttribute("artist", artistService.getAll());
+        model.addAttribute("artists", artistService.getAll());
         model.addAttribute("bands", bandService.getAll());
         return "editjoining";
     }

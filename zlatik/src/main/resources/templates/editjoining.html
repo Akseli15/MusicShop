@@ -1,10 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Музыкальный магазин - Редактирование</title>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            flatpickr("#joinDate", {
+                dateFormat: "Y-m-d",
+                enableTime: false
+            });
+            flatpickr("#leaveDate", {
+                dateFormat: "Y-m-d",
+                enableTime: false
+            });
+        });
+    </script>
 </head>
 <body>
-
+<div id="content">
+    <h1>Музыкальный магазин</h1>
+    <h2>Редактирование</h2>
+    <form th:action="@{/joining/edit/{id}(id=${joining.id})}" th:object="${joining}" method="POST">
+        <table>
+            <tr>
+                <input type="hidden" th:field="*{id}"/>
+            </tr>
+            <tr>
+                <td>Название группы:</td>
+                <td>
+                    <select name="bandName" id="bandName">
+                        <option th:each="band : ${bands}"
+                                th:value="${band.bandName}"
+                                th:text="${band.bandName}"
+                                th:selected="${joining != null && joining.band != null && band.bandName == joining.band.getBandName()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Имя исполнителя:</td>
+                <td>
+                    <select name="artistName" id="artistName">
+                        <option th:each="artist : ${artists}"
+                                th:value="${artist.artistName}"
+                                th:text="${artist.artistName}"
+                                th:selected="${joining != null && joining.artist != null && artist.artistName == joining.artist.getArtistName()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Дата вступления:</td>
+                <td><input type="text" th:field="*{joinDate}" id="joinDate"/></td>
+            </tr>
+            <tr>
+                <td>Дата ухода:</td>
+                <td><input type="text" th:field="*{leaveDate}" id="leaveDate"/></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Сохранить</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 </body>
 </html>
