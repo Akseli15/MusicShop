@@ -39,7 +39,13 @@ public class PerformsArtistController {
     }
     @Async
     @PostMapping("/create")
-    public String create(@RequestBody PerformsArtist performsArtist) {
+    public String create(@ModelAttribute PerformsArtist performsArtist,
+                         @RequestParam("songName") String songName,
+                         @RequestParam("artistName") String artistName) {
+        Song song = songService.getBySongName(songName);
+        performsArtist.setSong(song);
+        Artist artist = artistService.getByArtistName(artistName);
+        performsArtist.setArtist(artist);
         performsArtistService.create(performsArtist);
         return "redirect:/performsartist";
     }
@@ -66,7 +72,13 @@ public class PerformsArtistController {
     }
     @Async
     @PostMapping("/edit/{id}")
-    public String editPerformsArtist(@ModelAttribute PerformsArtist performsArtist) {
+    public String editPerformsArtist(@ModelAttribute PerformsArtist performsArtist,
+                                     @RequestParam("songName") String songName,
+                                     @RequestParam("artistName") String artistName) {
+        Song song = songService.getBySongName(songName);
+        performsArtist.setSong(song);
+        Artist artist = artistService.getByArtistName(artistName);
+        performsArtist.setArtist(artist);
         performsArtistService.update(performsArtist);
         return "redirect:/performsartist";
     }

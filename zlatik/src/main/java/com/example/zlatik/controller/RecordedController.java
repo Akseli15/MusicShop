@@ -1,8 +1,8 @@
 package com.example.zlatik.controller;
 
-import com.example.zlatik.entity.Album;
-import com.example.zlatik.entity.Carrier;
-import com.example.zlatik.entity.Recorded;
+import com.example.zlatik.entity.*;
+import com.example.zlatik.service.AlbumService;
+import com.example.zlatik.service.CarrierService;
 import com.example.zlatik.service.RecordedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -21,10 +21,16 @@ public class RecordedController {
 
     @Autowired
     RecordedService recordedService;
+    @Autowired
+    CarrierService carrierService;
+    @Autowired
+    AlbumService albumService;
     @Async
     @GetMapping("")
     public String getAll(Model model) {
         model.addAttribute("recordeds", recordedService.getAll());
+        model.addAttribute("albums", albumService.getAll());
+        model.addAttribute("carriers", carrierService.getAll());
         return "recorded";
     }
     @Async
@@ -36,7 +42,13 @@ public class RecordedController {
     }
     @Async
     @PostMapping("/create")
-    public String create(@RequestBody Recorded recorded) {
+    public String create(@ModelAttribute Recorded recorded,
+                         @RequestParam("albumName") String albumName,
+                         @RequestParam("idCarrier") Long idCarrier) {
+        Album album = albumService.getByAlbumName(albumName);
+        recorded.setAlbum(album);
+        Carrier carrier = carrierService.getById(idCarrier);
+        recorded.setCarrier(carrier);
         recordedService.create(recorded);
         return "redirect:/recorded";
     }
@@ -61,7 +73,13 @@ public class RecordedController {
     }
     @Async
     @PostMapping("/edit/{id}")
-    public String editRecorded(@ModelAttribute Recorded recorded) {
+    public String editRecorded(@ModelAttribute Recorded recorded,
+                               @RequestParam("albumName") String albumName,
+                               @RequestParam("idCarrier") Long idCarrier) {
+        Album album = albumService.getByAlbumName(albumName);
+        recorded.setAlbum(album);
+        Carrier carrier = carrierService.getById(idCarrier);
+        recorded.setCarrier(carrier);
         recordedService.update(recorded);
         return "redirect:/recorded";
     }

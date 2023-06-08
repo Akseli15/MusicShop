@@ -37,7 +37,7 @@ public class PerformsBandController {
     }
     @Async
     @PostMapping("/create")
-    public String create(@RequestBody PerformsBand performsBand) {
+    public String create(@ModelAttribute PerformsBand performsBand) {
         performsBandService.create(performsBand);
         return "redirect:/performsband";
     }

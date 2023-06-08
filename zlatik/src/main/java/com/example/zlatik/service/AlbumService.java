@@ -1,6 +1,7 @@
 package com.example.zlatik.service;
 
 import com.example.zlatik.entity.Album;
+import com.example.zlatik.entity.Band;
 import com.example.zlatik.repository.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,8 @@ public class AlbumService {
         album1.setAlbumDuration(album.getAlbumDuration());
         album1.setReleaseDate(album.getReleaseDate());
         albumRepository.save(album1);
+    }
+    public Album getByAlbumName(String albumName) {
+        return albumRepository.findFirstByAlbumName(albumName);
     }
 }

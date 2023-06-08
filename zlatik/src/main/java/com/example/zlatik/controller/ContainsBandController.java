@@ -37,7 +37,13 @@ public class ContainsBandController {
     }
     @Async
     @PostMapping("/create")
-    public String create(@RequestBody ContainsBand containsBand) {
+    public String create(@ModelAttribute ContainsBand containsBand,
+                         @RequestParam ("albumName") String albumName,
+                         @RequestParam ("bandName") String bandName) {
+        Album album = albumService.getByAlbumName(albumName);
+        Band band = bandService.getByBandName(bandName);
+        containsBand.setAlbum(album);
+        containsBand.setBand(band);
         containsBandService.create(containsBand);
         return "redirect:/containsband";
     }
@@ -64,7 +70,13 @@ public class ContainsBandController {
     }
     @Async
     @PostMapping("/edit/{id}")
-    public String editContainsBand(@ModelAttribute ContainsBand containsBand) {
+    public String editContainsBand(@ModelAttribute ContainsBand containsBand,
+                                   @RequestParam ("albumName") String albumName,
+                                   @RequestParam ("bandName") String bandName) {
+        Album album = albumService.getByAlbumName(albumName);
+        Band band = bandService.getByBandName(bandName);
+        containsBand.setAlbum(album);
+        containsBand.setBand(band);
         containsBandService.update(containsBand);
         return "redirect:/containsband";
     }

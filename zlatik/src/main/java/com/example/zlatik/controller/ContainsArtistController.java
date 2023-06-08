@@ -37,7 +37,7 @@ public class ContainsArtistController {
     }
     @Async
     @PostMapping("/create")
-    public String create(@RequestBody ContainsArtist containsArtist) {
+    public String create(@ModelAttribute ContainsArtist containsArtist) {
         containsArtistService.create(containsArtist);
         return "redirect:/containsartist";
     }

@@ -1,5 +1,6 @@
 package com.example.zlatik.service;
 
+import com.example.zlatik.entity.Album;
 import com.example.zlatik.entity.Genre;
 import com.example.zlatik.entity.Song;
 import com.example.zlatik.repository.SongRepository;
@@ -39,6 +40,7 @@ public class SongService {
         song1.setGenre(genre);
         songRepository.save(song1);
     }
-
-
+    public Song getBySongName(String songName) {
+        return songRepository.findFirstBySongName(songName);
+    }
 }

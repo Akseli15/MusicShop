@@ -37,7 +37,13 @@ public class ContainsSongController {
     }
     @Async
     @PostMapping("/create")
-    public String create(@RequestBody ContainsSong containsSong) {
+    public String create(@ModelAttribute ContainsSong containsSong,
+                         @RequestParam("albumName") String albumName,
+                         @RequestParam("songName") String songName) {
+        Album album = albumService.getByAlbumName(albumName);
+        Song song = songService.getBySongName(songName);
+        containsSong.setAlbum(album);
+        containsSong.setSong(song);
         containsSongService.create(containsSong);
         return "redirect:/containssong";
     }
@@ -64,7 +70,13 @@ public class ContainsSongController {
     }
     @Async
     @PostMapping("/edit/{id}")
-    public String editContainsSong(@ModelAttribute("id") ContainsSong containsSong) {
+    public String editContainsSong(@ModelAttribute ContainsSong containsSong,
+                                   @RequestParam("albumName") String albumName,
+                                   @RequestParam("songName") String songName) {
+        Album album = albumService.getByAlbumName(albumName);
+        Song song = songService.getBySongName(songName);
+        containsSong.setAlbum(album);
+        containsSong.setSong(song);
         containsSongService.update(containsSong);
         return "redirect:/containssong";
     }
