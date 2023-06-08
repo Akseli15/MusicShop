@@ -40,5 +40,12 @@ public class Song {
         this.songDuration = songDuration;
         this.genre = genre;
     }
+
+    public String getGenreName() {
+        if (genre != null) {
+            return genre.getGenreName();
+        }
+        return null;
+    }
 }
 

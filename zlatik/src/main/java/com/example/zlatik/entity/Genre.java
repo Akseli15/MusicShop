@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Setter
 @Getter
 @Entity
@@ -15,6 +17,8 @@ public class Genre {
     private Long id;
     @Column(name = "genre_name")
     private String genreName;
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.REMOVE)
+    private List<Song> songs;
 
     public Genre() {
     }

@@ -1,5 +1,6 @@
 package com.example.zlatik.service;
 
+import com.example.zlatik.entity.Genre;
 import com.example.zlatik.entity.Song;
 import com.example.zlatik.repository.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,9 @@ import java.util.List;
 public class SongService {
 
     @Autowired
-    private SongRepository songRepository;
-
+    SongRepository songRepository;
+    @Autowired
+    GenreService genreService;
     public List<Song> getAll() {
         return songRepository.findAll();
     }
@@ -33,7 +35,13 @@ public class SongService {
         song1.setSongName(song.getSongName());
         song1.setAuthor(song.getAuthor());
         song1.setSongDuration(song.getSongDuration());
-        song1.setGenre(song.getGenre());
+
+        // Установка жанра по названию
+        Genre genre = genreService.getByGenreName(song.getGenre().getGenreName());
+        song1.setGenre(genre);
+
         songRepository.save(song1);
     }
+
+
 }

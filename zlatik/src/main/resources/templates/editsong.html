@@ -8,28 +8,33 @@
 <div id="content">
     <h1>Музыкальный магазин</h1>
     <h2>Редактирование песни</h2>
-    <form th:action="@{/song/edit}" th:object="${song}" method="POST">
+    <form th:action="@{/song/edit/{id}(id=${song.id})}" th:object="${song}" method="POST">
         <table>
             <tr>
+                <input type="hidden" th:field="*{id}"/>
+            </tr>
+            <tr>
                 <td>Название песни:</td>
-                <td><input type="text" required th:field="*{title}" id="title"/></td>
+                <td><input type="text" th:field="*{songName}" id="songName"/></td>
             </tr>
             <tr>
                 <td>Автор:</td>
-                <td><input type="text" required th:field="*{author}" id="author"/></td>
+                <td><input type="text" th:field="*{author}" id="author"/></td>
             </tr>
             <tr>
                 <td>Продолжительность песни:</td>
-                <td><input type="text" required th:field="*{duration}" id="duration"/></td>
+                <td><input type="text" th:field="*{songDuration}" id="songDuration"/></td>
             </tr>
             <tr>
                 <td>Жанр:</td>
                 <td>
-                    <select th:field="*{genre}">
-                        <option th:each="genre: ${genres}"
-                                th:value="${genre}"
-                                th:text="${genre.name}"></option>
+                    <select name="genreName" id="genreName">
+                        <option th:each="genre : ${genres}"
+                                th:value="${genre.genreName}"
+                                th:text="${genre.genreName}"
+                                th:selected="${song != null && song.genre != null && genre.genreName eq song.genre.genreName}"></option>
                     </select>
+
                 </td>
             </tr>
             <tr>
