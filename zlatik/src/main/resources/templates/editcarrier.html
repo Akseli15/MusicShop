@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Музыкальный магазин - Редактирование носителя</title>
+    <link rel="stylesheet" href="/css/forms.css">
 </head>
 <body>
+<div id="content">
+    <h1>Музыкальный магазин</h1>
+    <h2>Редактирование носителя</h2>
+    <form th:action="@{/carrier/edit/{id}(id=${carrier.id})}" th:object="${carrier}" method="POST">
+        <table>
+            <tr>
+                <input type="hidden" th:field="*{id}"/>
+            </tr>
+            <tr>
+                <td>Название альбома:</td>
+                <td><input type="text" th:field="*{carrierType}" id="carrierType"/></td>
+            </tr>
+            <tr>
+                <td>Дата выпуска:</td>
+                <td><input type="text" th:field="*{carrierPublisher}" id="carrierPublisher"/></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Сохранить</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
+
 
 </body>
 </html>

@@ -8,11 +8,11 @@
 <div id="content">
     <h1>Музыкальный магазин</h1>
     <h2>Редактирование жанра</h2>
-    <form th:action="@{/genre/save}" th:object="${genre}" method="POST">
+    <form th:action="@{/genre/edit/{id}(id=${genre.id})}" th:object="${genre}" method="POST">
         <table>
             <tr>
                 <td>Название жанра:</td>
-                <td><input type="text" th:field="*{name}" id="name" /></td>
+                <td><input type="text" th:field="*{genreName}" id="genreName" /></td>
             </tr>
             <tr>
                 <td colspan="2">
