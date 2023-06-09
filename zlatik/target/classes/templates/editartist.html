@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Музыкальный магазин - Редактирование исполнителя</title>
+    <title>Music Shop - Artist editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/forms.css">
 </head>
 <body>
 <div id="content">
-    <h1>Музыкальный магазин</h1>
-    <h2>Редактирование исполнителя</h2>
+    <h1>Music Shop</h1>
+    <h2>Artist editor</h2>
     <form th:action="@{/artist/edit/{id}(id=${artist.id})}" th:object="${artist}" method="POST">
         <table>
             <tr>
                 <input type="hidden" th:field="*{id}" />
             </tr>
             <tr>
-                <td>Имя исполнителя:</td>
+                <td>Name:</td>
                 <td><input type="text" th:field="*{artistName}" id="artistName" /></td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <button type="submit">Сохранить</button>
+                    <button type="submit">Save changes</button>
                 </td>
             </tr>
         </table>
