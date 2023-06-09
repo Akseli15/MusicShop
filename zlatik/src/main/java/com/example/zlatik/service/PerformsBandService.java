@@ -1,6 +1,6 @@
 package com.example.zlatik.service;
 
-import com.example.zlatik.entity.PerformsBand;
+import com.example.zlatik.entity.*;
 import com.example.zlatik.repository.PerformsBandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,11 @@ import java.util.List;
 public class PerformsBandService {
 
     @Autowired
-    private PerformsBandRepository performsBandRepository;
+    PerformsBandRepository performsBandRepository;
+    @Autowired
+    SongService songService;
+    @Autowired
+    BandService bandService;
 
     public List<PerformsBand> getAll() {
         return performsBandRepository.findAll();
@@ -30,8 +34,10 @@ public class PerformsBandService {
 
     public void update(PerformsBand performsBand) {
         PerformsBand performsBand1 = getById(performsBand.getId());
-        performsBand1.setBand(performsBand.getBand());
-        performsBand1.setSong(performsBand.getSong());
+        Band band = bandService.getByBandName(performsBand.getBand().getBandName());
+        Song song = songService.getBySongName(performsBand.getSong().getSongName());
+        performsBand1.setBand(band);
+        performsBand1.setSong(song);
         performsBandRepository.save(performsBand1);
     }
 }

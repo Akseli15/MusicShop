@@ -1,9 +1,7 @@
 package com.example.zlatik.controller;
 
 import com.example.zlatik.entity.*;
-import com.example.zlatik.service.BandService;
-import com.example.zlatik.service.PerformsBandService;
-import com.example.zlatik.service.SongService;
+import com.example.zlatik.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
@@ -37,7 +35,13 @@ public class PerformsBandController {
     }
     @Async
     @PostMapping("/create")
-    public String create(@ModelAttribute PerformsBand performsBand) {
+    public String create(@ModelAttribute PerformsBand performsBand,
+                         @RequestParam("songName") String songName,
+                         @RequestParam("bandName") String bandName) {
+        Song song = songService.getBySongName(songName);
+        Band band = bandService.getByBandName(bandName);
+        performsBand.setSong(song);
+        performsBand.setBand(band);
         performsBandService.create(performsBand);
         return "redirect:/performsband";
     }
@@ -64,7 +68,13 @@ public class PerformsBandController {
     }
     @Async
     @PostMapping("/edit/{id}")
-    public String editPerformsBand(@ModelAttribute PerformsBand performsBand) {
+    public String editPerformsBand(@ModelAttribute PerformsBand performsBand,
+                                   @RequestParam("songName") String songName,
+                                   @RequestParam("bandName") String bandName) {
+        Song song = songService.getBySongName(songName);
+        Band band = bandService.getByBandName(bandName);
+        performsBand.setSong(song);
+        performsBand.setBand(band);
         performsBandService.update(performsBand);
         return "redirect:/performsband";
     }

@@ -1,17 +1,14 @@
 package com.example.zlatik.controller;
 
 import com.example.zlatik.entity.*;
-import com.example.zlatik.service.ArtistService;
-import com.example.zlatik.service.PerformsArtistService;
-import com.example.zlatik.service.SongService;
+import com.example.zlatik.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+
 @Controller
 @RequestMapping("/performsartist")
 public class PerformsArtistController {
@@ -43,8 +40,8 @@ public class PerformsArtistController {
                          @RequestParam("songName") String songName,
                          @RequestParam("artistName") String artistName) {
         Song song = songService.getBySongName(songName);
-        performsArtist.setSong(song);
         Artist artist = artistService.getByArtistName(artistName);
+        performsArtist.setSong(song);
         performsArtist.setArtist(artist);
         performsArtistService.create(performsArtist);
         return "redirect:/performsartist";
@@ -76,8 +73,8 @@ public class PerformsArtistController {
                                      @RequestParam("songName") String songName,
                                      @RequestParam("artistName") String artistName) {
         Song song = songService.getBySongName(songName);
-        performsArtist.setSong(song);
         Artist artist = artistService.getByArtistName(artistName);
+        performsArtist.setSong(song);
         performsArtist.setArtist(artist);
         performsArtistService.update(performsArtist);
         return "redirect:/performsartist";

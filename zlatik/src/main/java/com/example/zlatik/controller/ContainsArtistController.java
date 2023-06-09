@@ -1,11 +1,7 @@
 package com.example.zlatik.controller;
 
-import com.example.zlatik.entity.Album;
-import com.example.zlatik.entity.Artist;
-import com.example.zlatik.entity.ContainsArtist;
-import com.example.zlatik.service.AlbumService;
-import com.example.zlatik.service.ArtistService;
-import com.example.zlatik.service.ContainsArtistService;
+import com.example.zlatik.entity.*;
+import com.example.zlatik.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
