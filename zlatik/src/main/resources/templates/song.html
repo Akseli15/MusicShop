@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
-    <title>Музыкальный магазин</title>
+    <title>Music Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/tables.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -11,36 +12,36 @@
 <div id="container">
     <div id="menu">
         <ul>
-            <li><a href="/album">Альбомы</a></li>
-            <li><a href="/artist">Исполнители</a></li>
-            <li><a href="/genre">Жанры</a></li>
-            <li><a href="/carrier">Носители</a></li>
-            <li><a href="/band">Музыкальные группы</a></li>
-            <li><a href="/song">Песни</a></li>
-            <li><a href="/joining">Исполнители/Музыкальные группы</a></li>
-            <li><a href="/containssong">Альбомы/Песни</a></li>
-            <li><a href="/recorded">Альбомы/Носители</a></li>
-            <li><a href="/containsartist">Альбомы/Исполнители</a></li>
-            <li><a href="/containsband">Альбомы/Музыкальные группы</a></li>
-            <li><a href="/performsartist">Песни/Исполнители</a></li>
-            <li><a href="/performsband">Песни/Музыкальные группы</a></li>
+            <li><a href="/album">Albums</a></li>
+            <li><a href="/artist">Artists</a></li>
+            <li><a href="/genre">Genres</a></li>
+            <li><a href="/carrier">Carriers</a></li>
+            <li><a href="/band">Bands</a></li>
+            <li><a href="/song">Songs</a></li>
+            <li><a href="/joining">Artists/Bands</a></li>
+            <li><a href="/containssong">Albums/Songs</a></li>
+            <li><a href="/recorded">Albums/Carriers</a></li>
+            <li><a href="/containsartist">Albums/Artists</a></li>
+            <li><a href="/containsband">Albums/Bands</a></li>
+            <li><a href="/performsartist">Songs/Artists</a></li>
+            <li><a href="/performsband">Songs/Bands</a></li>
         </ul>
     </div>
     <div id="content">
-        <h1>Музыкальный магазин</h1>
+        <h1>Music Shop</h1>
         <div class="header">
-            <h2>Песни</h2>
-            <button class="add-button" onclick="openForm()">Добавить песню</button>
+            <h2>Songs</h2>
+            <button class="add-button" onclick="openForm()">Create song</button>
         </div>
         <table>
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Название песни</th>
-                <th>Автор</th>
-                <th>Продолжительность песни</th>
-                <th>Жанр</th>
-                <th>Действия</th>
+                <th>Song name</th>
+                <th>Author</th>
+                <th>Duration</th>
+                <th>Genre</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -64,23 +65,23 @@
 <div id="myModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeForm()">&times;</span>
-        <h2>Добавить песню</h2>
+        <h2>Create song</h2>
         <form th:action="@{/song/create}" method="POST">
             <table>
                 <tr>
-                    <td>Название песни:</td>
+                    <td>Name:</td>
                     <td><input type="text" name="songName"/></td>
                 </tr>
                 <tr>
-                    <td>Автор:</td>
+                    <td>Author:</td>
                     <td><input type="text" name="author"/></td>
                 </tr>
                 <tr>
-                    <td>Продолжительность песни:</td>
+                    <td>Duration:</td>
                     <td><input type="text" name="songDuration" id="songDuration"/></td>
                 </tr>
                 <tr>
-                    <td>Жанр:</td>
+                    <td>Genre:</td>
                     <td>
                         <select name="genreName" id="genreName">
                             <option th:each="genre : ${genres}"
@@ -93,7 +94,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button type="submit">Сохранить</button>
+                        <button type="submit">Create</button>
                     </td>
                 </tr>
             </table>

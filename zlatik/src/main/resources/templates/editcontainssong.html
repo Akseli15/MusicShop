@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Музыкальный магазин - Редактирование</title>
+    <title>Music Shop - Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/forms.css">
 </head>
 <body>
 <div id="content">
-    <h1>Музыкальный магазин</h1>
-    <h2>Редактирование</h2>
+    <h1>Music Shop</h1>
+    <h2>Editor</h2>
     <form th:action="@{/containssong/edit/{id}(id=${containsSong.id})}" th:object="${containsSong}" method="POST">
         <table>
             <tr>
                 <input type="hidden" th:field="*{id}"/>
             </tr>
             <tr>
-                <td>Название альбома:</td>
+                <td>Album:</td>
                 <td>
                     <select name="albumName" id="albumName">
                         <option th:each="album : ${albums}"
@@ -25,7 +26,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Название песни:</td>
+                <td>Song:</td>
                 <td>
                     <select name="songName" id="songName">
                         <option th:each="song : ${songs}"
@@ -36,7 +37,7 @@
                 </td>
             </tr>
             <tr>
-                <td>Порядковый номер:</td>
+                <td>Index number:</td>
                 <td><input type="text" th:field="*{indexNumber}" id="indexNumber"/></td>
             </tr>
             <td colspan="2">

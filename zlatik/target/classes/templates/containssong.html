@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html>
 <head>
-    <title>Музыкальный магазин</title>
-    <link rel="stylesheet" href="../static/css/tables.css">
+    <title>Music Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tables.css">
 </head>
 <body>
 <div id="container">
     <div id="menu">
         <ul>
-            <li><a href="/album">Альбомы</a></li>
-            <li><a href="/artist">Исполнители</a></li>
-            <li><a href="/genre">Жанры</a></li>
-            <li><a href="/carrier">Носители</a></li>
-            <li><a href="/band">Музыкальные группы</a></li>
-            <li><a href="/song">Песни</a></li>
-            <li><a href="/joining">Исполнители/Музыкальные группы</a></li>
-            <li><a href="/containssong">Альбомы/Песни</a></li>
-            <li><a href="/recorded">Альбомы/Носители</a></li>
-            <li><a href="/containsartist">Альбомы/Исполнители</a></li>
-            <li><a href="/containsband">Альбомы/Музыкальные группы</a></li>
-            <li><a href="/performsartist">Песни/Исполнители</a></li>
-            <li><a href="/performsband">Песни/Музыкальные группы</a></li>
+            <li><a href="/album">Albums</a></li>
+            <li><a href="/artist">Artists</a></li>
+            <li><a href="/genre">Genres</a></li>
+            <li><a href="/carrier">Carriers</a></li>
+            <li><a href="/band">Bands</a></li>
+            <li><a href="/song">Songs</a></li>
+            <li><a href="/joining">Artists/Bands</a></li>
+            <li><a href="/containssong">Albums/Songs</a></li>
+            <li><a href="/recorded">Albums/Carriers</a></li>
+            <li><a href="/containsartist">Albums/Artists</a></li>
+            <li><a href="/containsband">Albums/Bands</a></li>
+            <li><a href="/performsartist">Songs/Artists</a></li>
+            <li><a href="/performsband">Songs/Bands</a></li>
         </ul>
     </div>
     <div id="content">
-        <h1>Музыкальный магазин</h1>
+        <h1>Music Shop</h1>
         <div class="header">
-            <h2>Альбомы/Песни</h2>
-            <button class="add-button" onclick="openForm()">Добавить</button>
+            <h2>Albums/Songs</h2>
+            <button class="add-button" onclick="openForm()">Create</button>
         </div>
         <table>
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Название альбома</th>
-                <th>Название песни</th>
-                <th>Порядковый номер</th>
+                <th>Album</th>
+                <th>Song</th>
+                <th>Index number</th>
                 <th>Действия</th>
             </tr>
             </thead>
@@ -45,7 +45,7 @@
                 <td th:text="${containssong.id}"></td>
                 <td th:text="${containssong.album.getAlbumName()}"></td>
                 <td th:text="${containssong.song.getSongName()}"></td>
-                <td th:text="${containssong.indexNumber}"></td>
+                <td th:text="${containssong.getIndexNumber()}"></td>
                 <td>
                     <a th:href="@{/containssong/edit/{id}(id=${containssong.getId()})}"><span>&#9999;</span></a>
                     <form th:action="@{/containssong/delete/{id}(id=${containssong.getId()})}" method="POST">
@@ -57,5 +57,54 @@
         </table>
     </div>
 </div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <h2>Create</h2>
+        <form th:action="@{/containssong/create}" method="POST">
+            <table>
+                <tr>
+                    <td>Album:</td>
+                    <td>
+                        <select name="albumName" id="albumName">
+                            <option th:each="album : ${albums}"
+                                    th:value="${album.albumName}"
+                                    th:text="${album.albumName}"
+                                    th:selected="${containssong != null && containssong.album != null && album.albumName == containssong.album.getAlbumName()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Song:</td>
+                    <td>
+                        <select name="songName" id="songName">
+                            <option th:each="song : ${songs}"
+                                    th:value="${song.songName}"
+                                    th:text="${song.songName}"
+                                    th:selected="${containssong != null && containssong.song != null && containssong.songName == containssong.song.getSongName()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Index number:</td>
+                    <td><input type="text" name="indexNumber"/></td>
+                </tr>
+                    <td colspan="2">
+                        <button type="submit">Create</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+    function openForm() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myModal").style.display = "none";
+    }
+</script>
 </body>
 </html>

@@ -44,10 +44,10 @@ public class RecordedController {
     @PostMapping("/create")
     public String create(@ModelAttribute Recorded recorded,
                          @RequestParam("albumName") String albumName,
-                         @RequestParam("idCarrier") Long idCarrier) {
+                         @RequestParam("idCarrier") String idCarrier) {
         Album album = albumService.getByAlbumName(albumName);
+        Carrier carrier = carrierService.getById(Long.valueOf(idCarrier));
         recorded.setAlbum(album);
-        Carrier carrier = carrierService.getById(idCarrier);
         recorded.setCarrier(carrier);
         recordedService.create(recorded);
         return "redirect:/recorded";
@@ -69,16 +69,18 @@ public class RecordedController {
     public String getRecorded(@PathVariable("id") Long id, Model model) {
         Recorded recorded = recordedService.getById(id);
         model.addAttribute("recorded", recorded);
+        model.addAttribute("albums", albumService.getAll());
+        model.addAttribute("carriers", carrierService.getAll());
         return "editrecorded";
     }
     @Async
     @PostMapping("/edit/{id}")
     public String editRecorded(@ModelAttribute Recorded recorded,
                                @RequestParam("albumName") String albumName,
-                               @RequestParam("idCarrier") Long idCarrier) {
+                               @RequestParam("idCarrier") String idCarrier) {
         Album album = albumService.getByAlbumName(albumName);
+        Carrier carrier = carrierService.getById(Long.valueOf(idCarrier));
         recorded.setAlbum(album);
-        Carrier carrier = carrierService.getById(idCarrier);
         recorded.setCarrier(carrier);
         recordedService.update(recorded);
         return "redirect:/recorded";

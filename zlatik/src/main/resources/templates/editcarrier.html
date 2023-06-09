@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Музыкальный магазин - Редактирование носителя</title>
+    <title>Music Shop - Carrier editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/forms.css">
 </head>
 <body>
 <div id="content">
-    <h1>Музыкальный магазин</h1>
-    <h2>Редактирование носителя</h2>
+    <h1>Music Shop</h1>
+    <h2>Carrier editor</h2>
     <form th:action="@{/carrier/edit/{id}(id=${carrier.id})}" th:object="${carrier}" method="POST">
         <table>
             <tr>
                 <input type="hidden" th:field="*{id}"/>
             </tr>
             <tr>
-                <td>Название альбома:</td>
+                <td>Type:</td>
                 <td><input type="text" th:field="*{carrierType}" id="carrierType"/></td>
             </tr>
             <tr>
-                <td>Дата выпуска:</td>
+                <td>Publisher:</td>
                 <td><input type="text" th:field="*{carrierPublisher}" id="carrierPublisher"/></td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <button type="submit">Сохранить</button>
+                    <button type="submit">Save changes</button>
                 </td>
             </tr>
         </table>

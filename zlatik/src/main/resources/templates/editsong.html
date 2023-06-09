@@ -1,32 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Музыкальный магазин - Редактирование песни</title>
+    <title>Music Shop - Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/forms.css">
 </head>
 <body>
 <div id="content">
-    <h1>Музыкальный магазин</h1>
-    <h2>Редактирование песни</h2>
+    <h1>Music Shop</h1>
+    <h2>Editor</h2>
     <form th:action="@{/song/edit/{id}(id=${song.id})}" th:object="${song}" method="POST">
         <table>
             <tr>
                 <input type="hidden" th:field="*{id}"/>
             </tr>
             <tr>
-                <td>Название песни:</td>
+                <td>Album name:</td>
                 <td><input type="text" th:field="*{songName}" id="songName"/></td>
             </tr>
             <tr>
-                <td>Автор:</td>
+                <td>Author:</td>
                 <td><input type="text" th:field="*{author}" id="author"/></td>
             </tr>
             <tr>
-                <td>Продолжительность песни:</td>
+                <td>Duration:</td>
                 <td><input type="text" th:field="*{songDuration}" id="songDuration"/></td>
             </tr>
             <tr>
-                <td>Жанр:</td>
+                <td>Genre:</td>
                 <td>
                     <select name="genreName" id="genreName">
                         <option th:each="genre : ${genres}"
@@ -38,7 +39,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <button type="submit">Сохранить</button>
+                    <button type="submit">Save changes</button>
                 </td>
             </tr>
         </table>

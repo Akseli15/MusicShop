@@ -1,34 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Музыкальный магазин - Редактирование носителя</title>
-  <link rel="stylesheet" href="/css/forms.css">
+    <title>Music Shop - Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/forms.css">
 </head>
 <body>
 <div id="content">
-  <h1>Музыкальный магазин</h1>
-  <h2>Редактирование носителя</h2>
-  <form th:action="@{/carrier/save}" th:object="${carrier}" method="POST">
-    <table>
-      <tr>
-        <td>ID носителя:</td>
-        <td><input type="text" th:field="*{id}" id="id" /></td>
-      </tr>
-      <tr>
-        <td>Тип носителя:</td>
-        <td><input type="text" th:field="*{type}" id="type" /></td>
-      </tr>
-      <tr>
-        <td>Издатель:</td>
-        <td><input type="text" th:field="*{publisher}" id="publisher" /></td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <button type="submit">Сохранить</button>
-        </td>
-      </tr>
-    </table>
-  </form>
+    <h1>Music Shop</h1>
+    <h2>Editor</h2>
+    <form th:action="@{/recorded/edit/{id}(id=${recorded.id})}" th:object="${recorded}" method="POST">
+        <table>
+            <tr>
+                <input type="hidden" th:field="*{id}"/>
+            </tr>
+            <tr>
+                <td>Album name:</td>
+                <td>
+                    <select name="albumName" id="albumName">
+                        <option th:each="album : ${albums}"
+                                th:value="${album.albumName}"
+                                th:text="${album.albumName}"
+                                th:selected="${recorded != null && recorded.album != null && album.albumName == recorded.album.getAlbumName()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>ID carrier:</td>
+                <td>
+                    <select name="idCarrier" id="id_carrier">
+                        <option th:each="carrier : ${carriers}"
+                                th:value="${carrier.id}"
+                                th:text="${carrier.id}"
+                                th:selected="${recorded != null && recorded.carrier != null && carrier.id == recorded.carrier.getId()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Cost:</td>
+                <td><input type="text" th:field="*{recordedCost}" id="recordedCost"/></td>
+            </tr>
+            <td colspan="2">
+                <button type="submit">Save changes</button>
+            </td>
+            </tr>
+        </table>
+    </form>
 </div>
 </body>
 </html>

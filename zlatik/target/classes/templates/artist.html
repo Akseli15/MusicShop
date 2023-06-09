@@ -1,42 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head>
-    <title>Музыкальный магазин</title>
-    <link rel="stylesheet" href="../static/css/tables.css">
+    <title>Music Shop</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/tables.css">
 </head>
-
 <body>
 <div id="container">
     <div id="menu">
         <ul>
-            <li><a href="/album">Альбомы</a></li>
-            <li><a href="/artist">Исполнители</a></li>
-            <li><a href="/genre">Жанры</a></li>
-            <li><a href="/carrier">Носители</a></li>
-            <li><a href="/band">Музыкальные группы</a></li>
-            <li><a href="/song">Песни</a></li>
-            <li><a href="/joining">Исполнители/Музыкальные группы</a></li>
-            <li><a href="/containssong">Альбомы/Песни</a></li>
-            <li><a href="/recorded">Альбомы/Носители</a></li>
-            <li><a href="/containsartist">Альбомы/Исполнители</a></li>
-            <li><a href="/containsband">Альбомы/Музыкальные группы</a></li>
-            <li><a href="/performsartist">Песни/Исполнители</a></li>
-            <li><a href="/performsband">Песни/Музыкальные группы</a></li>
+            <li><a href="/album">Albums</a></li>
+            <li><a href="/artist">Artists</a></li>
+            <li><a href="/genre">Genres</a></li>
+            <li><a href="/carrier">Carriers</a></li>
+            <li><a href="/band">Bands</a></li>
+            <li><a href="/song">Songs</a></li>
+            <li><a href="/joining">Artists/Bands</a></li>
+            <li><a href="/containssong">Albums/Songs</a></li>
+            <li><a href="/recorded">Albums/Carriers</a></li>
+            <li><a href="/containsartist">Albums/Artists</a></li>
+            <li><a href="/containsband">Albums/Bands</a></li>
+            <li><a href="/performsartist">Songs/Artists</a></li>
+            <li><a href="/performsband">Songs/Bands</a></li>
         </ul>
     </div>
     <div id="content">
-        <h1>Музыкальный магазин</h1>
+        <h1>Music Shop</h1>
         <div class="header">
-            <h2>Исполнитель</h2>
-            <button class="add-button" onclick="openForm()">Добавить исполнителя</button>
+            <h2>Artists</h2>
+            <button class="add-button" onclick="openForm()">Create artist</button>
         </div>
         <table>
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Имя исполнителя</th>
-                <th>Действия</th>
+                <th>Name</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -57,16 +56,16 @@
 <div id="myModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeForm()">&times;</span>
-        <h2>Добавить исполнителя</h2>
+        <h2>Create artist</h2>
         <form th:action="@{/artist/create}" method="POST">
             <table>
                 <tr>
-                    <td>Имя исполнителя:</td>
+                    <td>Name:</td>
                     <td><input type="text" name="artistName"/></td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button type="submit">Сохранить</button>
+                        <button type="submit">Create</button>
                     </td>
                 </tr>
             </table>

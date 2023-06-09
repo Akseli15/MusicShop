@@ -1,5 +1,7 @@
 package com.example.zlatik.service;
 
+import com.example.zlatik.entity.Album;
+import com.example.zlatik.entity.Carrier;
 import com.example.zlatik.entity.Recorded;
 import com.example.zlatik.repository.RecordedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,11 @@ import java.util.List;
 public class RecordedService {
 
     @Autowired
-    private RecordedRepository recordedRepository;
+    RecordedRepository recordedRepository;
+    @Autowired
+    AlbumService albumService;
+    @Autowired
+    CarrierService carrierService;
 
     public List<Recorded> getAll() {
         return recordedRepository.findAll();
@@ -31,9 +37,11 @@ public class RecordedService {
 
     public void update(Recorded recorded) {
         Recorded recorded1 = getById(recorded.getId());
-        recorded1.setAlbum(recorded.getAlbum());
+        Album album = albumService.getByAlbumName(recorded.getAlbum().getAlbumName());
+        Carrier carrier = carrierService.getById(recorded.getCarrier().getId());
+        recorded1.setAlbum(album);
+        recorded1.setCarrier(carrier);
         recorded1.setRecordedCost(recorded.getRecordedCost());
-        recorded1.setCarrier(recorded.getCarrier());
         recordedRepository.save(recorded1);
     }
 }

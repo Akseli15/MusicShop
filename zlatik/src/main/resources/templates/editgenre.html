@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Музыкальный магазин - Редактирование жанра</title>
+    <title>Music Shop - Genre editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/forms.css">
 </head>
 <body>
 <div id="content">
-    <h1>Музыкальный магазин</h1>
-    <h2>Редактирование жанра</h2>
+    <h1>Music Shop</h1>
+    <h2>Genre editor</h2>
     <form th:action="@{/genre/edit/{id}(id=${genre.id})}" th:object="${genre}" method="POST">
         <table>
             <tr>
-                <td>Название жанра:</td>
+                <td>Name:</td>
                 <td><input type="text" th:field="*{genreName}" id="genreName" /></td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <button type="submit">Сохранить</button>
+                    <button type="submit">Save changes</button>
                 </td>
             </tr>
         </table>
