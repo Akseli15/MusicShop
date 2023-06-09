@@ -1,10 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Музыкальный магазин - Редактирование</title>
+    <link rel="stylesheet" href="/css/forms.css">
 </head>
 <body>
-
+<div id="content">
+    <h1>Музыкальный магазин</h1>
+    <h2>Редактирование</h2>
+    <form th:action="@{/performsartist/edit/{id}(id=${performsArtist.id})}" th:object="${performsArtist}" method="POST">
+        <table>
+            <tr>
+                <input type="hidden" th:field="*{id}"/>
+            </tr>
+            <tr>
+                <td>Название песни:</td>
+                <td>
+                    <select name="songName" id="songName">
+                        <option th:each="song : ${songs}"
+                                th:value="${song.songName}"
+                                th:text="${song.songName}"
+                                th:selected="${performsartist != null && performsartist.song != null && song.songName == performsartist.song.getSongName()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Имя исполнителя:</td>
+                <td>
+                    <select name="artistName" id="artistName">
+                        <option th:each="artist : ${artists}"
+                                th:value="${artist.artistName}"
+                                th:text="${artist.artistName}"
+                                th:selected="${performsartist != null && performsartist.artist != null && artist.artistName == performsartist.artist.getArtistName()}"></option>
+                    </select>
+                </td>
+            </tr>
+            <td colspan="2">
+                <button type="submit">Сохранить</button>
+            </td>
+            </tr>
+        </table>
+    </form>
+</div>
 </body>
 </html>

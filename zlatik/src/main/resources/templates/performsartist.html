@@ -55,5 +55,49 @@
         </table>
     </div>
 </div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <h2>Добавить альбом</h2>
+        <form th:action="@{/performsartist/create}" method="POST">
+            <table>
+                <tr>
+                    <td>Название песни:</td>
+                    <td>
+                        <select name="songName" id="songName">
+                            <option th:each="song : ${songs}"
+                                    th:value="${song.songName}"
+                                    th:text="${song.songName}"
+                                    th:selected="${performsartist != null && performsartist.song != null && song.songName == performsartist.song.getSongName()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Название песни:</td>
+                    <td>
+                        <select name="artistName" id="artistName">
+                            <option th:each="artist : ${artists}"
+                                    th:value="${artist.artistName}"
+                                    th:text="${artist.artistName}"
+                                    th:selected="${performsartist != null && performsartist.artist != null && artist.artistName == performsartist.artist.getArtistName()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <td colspan="2">
+                    <button type="submit">Сохранить</button>
+                </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+    function openForm() {
+        document.getElementById("myModal").style.display = "block";
+    }
+    function closeForm() {
+        document.getElementById("myModal").style.display = "none";
+    }
+</script>
 </body>
 </html>
