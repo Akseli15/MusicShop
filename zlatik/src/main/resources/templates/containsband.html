@@ -55,5 +55,50 @@
         </table>
     </div>
 </div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <h2>Добавить альбом</h2>
+        <form th:action="@{/containsband/create}" method="POST">
+            <table>
+                <tr>
+                    <td>Название альбома:</td>
+                    <td>
+                        <select name="albumName" id="albumName">
+                            <option th:each="album : ${albums}"
+                                    th:value="${album.albumName}"
+                                    th:text="${album.albumName}"
+                                    th:selected="${containsband != null && containsband.album != null && album.albumName == containsband.album.getAlbumName()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Название группы:</td>
+                    <td>
+                        <select name="bandName" id="bandName">
+                            <option th:each="band : ${bands}"
+                                    th:value="${band.bandName}"
+                                    th:text="${band.bandName}"
+                                    th:selected="${containsband != null && containsband.band != null && band.bandName == containsband.band.getBandName()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <td colspan="2">
+                    <button type="submit">Сохранить</button>
+                </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+    function openForm() {
+        document.getElementById("myModal").style.display = "block";
+    }
+    function closeForm() {
+        document.getElementById("myModal").style.display = "none";
+    }
+</script>
 </body>
 </html>
+

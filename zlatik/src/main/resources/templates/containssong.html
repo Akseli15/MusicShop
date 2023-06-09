@@ -57,5 +57,54 @@
         </table>
     </div>
 </div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <h2>Добавить альбом</h2>
+        <form th:action="@{/containssong/create}" method="POST">
+            <table>
+                <tr>
+                    <td>Название альбома:</td>
+                    <td>
+                        <select name="albumName" id="albumName">
+                            <option th:each="album : ${albums}"
+                                    th:value="${album.albumName}"
+                                    th:text="${album.albumName}"
+                                    th:selected="${containssong != null && containssong.album != null && album.albumName == containssong.album.getAlbumName()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Название песни:</td>
+                    <td>
+                        <select name="songName" id="songName">
+                            <option th:each="song : ${songs}"
+                                    th:value="${song.songName}"
+                                    th:text="${song.songName}"
+                                    th:selected="${containssong != null && containssong.song != null && containssong.songName == containssong.song.getSongName()}"></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Порядковый номер:</td>
+                    <td><input type="text" name="indexNumber"/></td>
+                </tr>
+                    <td colspan="2">
+                        <button type="submit">Сохранить</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+<script>
+    function openForm() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("myModal").style.display = "none";
+    }
+</script>
 </body>
 </html>

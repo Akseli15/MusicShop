@@ -2,7 +2,6 @@ package com.example.zlatik.service;
 
 import com.example.zlatik.entity.Artist;
 import com.example.zlatik.entity.Band;
-import com.example.zlatik.entity.Genre;
 import com.example.zlatik.entity.Joining;
 import com.example.zlatik.repository.JoiningRepository;
 import org.springframework.beans.factory.annotation.Autowired;

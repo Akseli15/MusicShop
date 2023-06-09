@@ -1,6 +1,8 @@
 package com.example.zlatik.service;
 
+import com.example.zlatik.entity.Album;
 import com.example.zlatik.entity.ContainsSong;
+import com.example.zlatik.entity.Song;
 import com.example.zlatik.repository.ContainsSongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,11 @@ import java.util.List;
 public class ContainsSongService {
 
     @Autowired
-    private ContainsSongRepository containsSongRepository;
-
+    ContainsSongRepository containsSongRepository;
+    @Autowired
+    AlbumService albumService;
+    @Autowired
+    SongService songService;
     public List<ContainsSong> getAll() {
         return containsSongRepository.findAll();
     }
@@ -31,8 +36,10 @@ public class ContainsSongService {
 
     public void update(ContainsSong containsSong) {
         ContainsSong containsSong1 = getById(containsSong.getId());
-        containsSong1.setAlbum(containsSong.getAlbum());
-        containsSong1.setSong(containsSong.getSong());
+        Album album = albumService.getByAlbumName(containsSong.getAlbum().getAlbumName());
+        Song song = songService.getBySongName(containsSong.getSong().getSongName());
+        containsSong1.setAlbum(album);
+        containsSong1.setSong(song);
         containsSongRepository.save(containsSong1);
     }
 }

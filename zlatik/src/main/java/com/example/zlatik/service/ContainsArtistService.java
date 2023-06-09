@@ -1,5 +1,7 @@
 package com.example.zlatik.service;
 
+import com.example.zlatik.entity.Album;
+import com.example.zlatik.entity.Artist;
 import com.example.zlatik.entity.ContainsArtist;
 import com.example.zlatik.repository.ContainsArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,11 @@ import java.util.List;
 public class ContainsArtistService {
 
     @Autowired
-    private ContainsArtistRepository containsArtistRepository;
-
+    ContainsArtistRepository containsArtistRepository;
+    @Autowired
+    AlbumService albumService;
+    @Autowired
+    ArtistService artistService;
     public List<ContainsArtist> getAll() {
         return containsArtistRepository.findAll();
     }
@@ -30,8 +35,10 @@ public class ContainsArtistService {
 
     public void update(ContainsArtist containsArtist) {
         ContainsArtist containsArtist1 = getById(containsArtist.getId());
-        containsArtist1.setAlbum(containsArtist.getAlbum());
-        containsArtist1.setArtist(containsArtist.getArtist());
+        Album album = albumService.getByAlbumName(containsArtist.getAlbum().getAlbumName());
+        Artist artist = artistService.getByArtistName(containsArtist.getArtist().getArtistName());
+        containsArtist1.setAlbum(album);
+        containsArtist1.setArtist(artist);
         containsArtistRepository.save(containsArtist1);
     }
 }

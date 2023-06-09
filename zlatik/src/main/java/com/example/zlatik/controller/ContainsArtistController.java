@@ -1,5 +1,7 @@
 package com.example.zlatik.controller;
 
+import com.example.zlatik.entity.Album;
+import com.example.zlatik.entity.Artist;
 import com.example.zlatik.entity.ContainsArtist;
 import com.example.zlatik.service.AlbumService;
 import com.example.zlatik.service.ArtistService;
@@ -37,7 +39,13 @@ public class ContainsArtistController {
     }
     @Async
     @PostMapping("/create")
-    public String create(@ModelAttribute ContainsArtist containsArtist) {
+    public String create(@ModelAttribute ContainsArtist containsArtist,
+                         @RequestParam("albumName") String albumName,
+                         @RequestParam("artistName") String artistName) {
+        Album album = albumService.getByAlbumName(albumName);
+        Artist artist = artistService.getByArtistName(artistName);
+        containsArtist.setAlbum(album);
+        containsArtist.setArtist(artist);
         containsArtistService.create(containsArtist);
         return "redirect:/containsartist";
     }
@@ -64,7 +72,13 @@ public class ContainsArtistController {
     }
     @Async
     @PostMapping("/edit/{id}")
-    public String editContainsArtist(@ModelAttribute ContainsArtist containsArtist) {
+    public String editContainsArtist(@ModelAttribute ContainsArtist containsArtist,
+                                     @RequestParam("albumName") String albumName,
+                                     @RequestParam("artistName") String artistName) {
+        Album album = albumService.getByAlbumName(albumName);
+        Artist artist = artistService.getByArtistName(artistName);
+        containsArtist.setAlbum(album);
+        containsArtist.setArtist(artist);
         containsArtistService.update(containsArtist);
         return "redirect:/containsartist";
     }
