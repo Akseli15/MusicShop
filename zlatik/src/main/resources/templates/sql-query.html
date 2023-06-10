@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${pageTitle}">SQL Query Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/sql-query.css">
+</head>
+<body>
+<div id="menu">
+    <ul>
+        <li><a href="/album">Albums</a></li>
+        <li><a href="/artist">Artists</a></li>
+        <li><a href="/genre">Genres</a></li>
+        <li><a href="/carrier">Carriers</a></li>
+        <li><a href="/band">Bands</a></li>
+        <li><a href="/song">Songs</a></li>
+        <li><a href="/joining">Artists/Bands</a></li>
+        <li><a href="/containssong">Albums/Songs</a></li>
+        <li><a href="/recorded">Albums/Carriers</a></li>
+        <li><a href="/containsartist">Albums/Artists</a></li>
+        <li><a href="/containsband">Albums/Bands</a></li>
+        <li><a href="/performsartist">Songs/Artists</a></li>
+        <li><a href="/performsband">Songs/Bands</a></li>
+        <li><a href="/sql-query">SQL Query</a></li>
+    </ul>
+</div>
+<h1>Enter your SQL query:</h1>
+<form action="/execute-query" method="POST">
+    <textarea name="sqlQuery" rows="5" cols="50"></textarea>
+    <br>
+    <input type="submit" value="Execute">
+</form>
+<br>
+<h2>Query Results:</h2>
+<table th:if="${queryResult != null}">
+    <thead>
+    <tr>
+        <th th:each="column : ${columnHeaders}" th:text="${column}"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${queryResult.rows}">
+        <td th:each="cell : ${row}" th:text="${cell}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
