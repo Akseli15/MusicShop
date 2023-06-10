@@ -33,11 +33,6 @@
 <br>
 <h2>Query Results:</h2>
 <table th:if="${queryResult != null}">
-    <thead>
-    <tr>
-        <th th:each="column : ${columnHeaders}" th:text="${column}"></th>
-    </tr>
-    </thead>
     <tbody>
     <tr th:each="row : ${queryResult.rows}">
         <td th:each="cell : ${row}" th:text="${cell}"></td>
